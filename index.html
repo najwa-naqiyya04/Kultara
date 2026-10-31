@@ -1,0 +1,3164 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="PUSAKA — Digital Cultural Archive Nusantara."
+    />
+
+    <link rel="stylesheet" href="src/input.css" />
+
+    <title>PUSAKA — Digital Cultural Archive</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Font Family (Google Fonts - Plus Jakarta Sans, Poppins, Kaisei Decol, Noto Sans Scripts) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Kaisei+Decol:wght@700&family=Noto+Sans+Balinese&family=Noto+Sans+Javanese&family=Noto+Sans+Sundanese&family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- gsap -->
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+    <style>
+      body {
+        font-family: "Plus Jakarta Sans", sans-serif;
+      }
+
+      /* Trapesium Melengkung Bagian Bawah Kaca Bening */
+      .folder-trapezoid {
+        clip-path: polygon(0% 0%, 100% 0%, 96% 100%, 4% 100%);
+      }
+
+      /* Gaya kartu didefinisikan sekali, supaya markup tidak berulang 7x. */
+      .carousel-card {
+        flex-shrink: 0;
+        width: 28vw;
+        max-width: 260px;
+      }
+
+      @media (min-width: 640px) {
+        .carousel-card {
+          width: 22vw;
+        }
+      }
+
+      .carousel-card__figure {
+        aspect-ratio: 2 / 3; /* lebih panjang ke bawah (sebelumnya 3 / 4) */
+        overflow: hidden;
+        border-radius: 1rem;
+        box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+        transform-style: preserve-3d;
+      }
+
+      .carousel-card__image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      /* Styling Accordion Ruang Batik Nusantara */
+      .batik-accordion .batik-card {
+        flex: 1;
+        transition: flex 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+      }
+      .batik-accordion .batik-card:hover {
+        flex: 4;
+      }
+    </style>
+  </head>
+
+  <body class="bg-[#171A18] antialiased">
+<!-- navbar -->
+
+<header class="w-full bg-[#FBFEED] px-4 pt-4 relative z-50 ">
+<div class="max-w-[1420px] mx-auto bg-white border border-[#e9e4d7] rounded-full shadow-[0_10px_30px_rgba(35,79,16,0.15),0_2px_8px_rgba(0,0,0,0.08)] px-5 py-3 flex items-center justify-between relative">    
+    <!-- Logo dengan tag img & smooth hover -->
+    <a href="#" class="flex items-center gap-2 focus:outline-none">
+      <img src="asset/logo-mobile.png" alt="Logo Pusaka Digital Cultural" class="w-9 h-9 object-contain transition-transform duration-300 ease-in-out hover:scale-105" />
+    </a>
+
+    <!-- Menu Navigasi untuk Desktop & Tablet -->
+    <nav class="hidden md:flex items-center gap-8 lg:gap-10" aria-label="Desktop Navigation">
+      <a href="#home" class="text-[15px] font-medium text-[#1b211e] hover:text-[#9CBE60] transition-colors duration-200">
+        Home
+      </a>
+      <a href="#peta-budaya" class="text-[15px] font-medium text-[#1b211e] hover:text-[#9CBE60] transition-colors duration-200">
+        Peta Budaya
+      </a>
+      <a href="#aksara" class="text-[15px] font-medium text-[#1b211e] hover:text-[#9CBE60] transition-colors duration-200">
+        Aksara
+      </a>
+      <a href="#musik" class="text-[15px] font-medium text-[#1b211e] hover:text-[#9CBE60] transition-colors duration-200">
+        Musik
+      </a>
+      <a href="#warisan" class="text-[15px] font-medium text-[#1b211e] hover:text-[#9CBE60] transition-colors duration-200">
+        Warisan
+      </a>
+    </nav>
+
+    <!-- Tombol "Get in Touch" & Hamburger -->
+    <div class="flex items-center">
+      <!-- Tombol Get in Touch -->
+<a 
+  href="#contact" 
+  class="hidden md:inline-flex items-center justify-center px-5 py-2.5 border-[1.5px] border-[#53731B] rounded-full text-[14px] font-semibold text-[#53731B] bg-[#B0E454]/20 shadow-[0_4.266px_4.266px_0_rgba(35,79,16,0.2)] transition-transform duration-300 ease-in-out hover:scale-105 hover:border-[#9CBE60] hover:text-[#9CBE60]"
+>
+  Get In Touch
+</a>
+
+      <!-- Tombol Hamburger (Mobile) -->
+      <button 
+        id="hamburger-btn" 
+        type="button" 
+        class="md:hidden p-2 text-[#1b211e] hover:text-[#9CBE60] focus:outline-none transition-colors duration-200"
+        aria-label="Toggle Menu"
+        aria-expanded="false"
+      >
+        <svg 
+          class="w-7 h-7" 
+          fill="none" 
+          stroke="currentColor" 
+          stroke-width="2" 
+          stroke-linecap="round" 
+          stroke-linejoin="round" 
+          viewBox="0 0 24 24"
+        >
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Menu Dropdown Mobile -->
+  <div 
+    id="mobile-menu" 
+    class="absolute top-[calc(100%+8px)] right-4 left-4 mt-2 bg-white border border-[#e9e4d7] rounded-2xl shadow-[0_10px_25px_rgb(0_0_0_10%)] overflow-hidden hidden md:hidden transition-all duration-200 ease-out"
+  >
+    <nav class="flex flex-col py-2" aria-label="Mobile Navigation">
+      <a href="#home" class="px-5 py-3 text-[15px] font-medium text-[#1b211e] hover:bg-[#fffaf4] hover:text-[#9CBE60] transition-colors">
+        Home
+      </a>
+      <a href="#peta-budaya" class="px-5 py-3 text-[15px] font-medium text-[#1b211e] hover:bg-[#fffaf4] hover:text-[#9CBE60] transition-colors">
+        Peta Budaya
+      </a>
+      <a href="#aksara" class="px-5 py-3 text-[15px] font-medium text-[#1b211e] hover:bg-[#fffaf4] hover:text-[#9CBE60] transition-colors">
+        Aksara
+      </a>
+      <a href="#musik" class="px-5 py-3 text-[15px] font-medium text-[#1b211e] hover:bg-[#fffaf4] hover:text-[#9CBE60] transition-colors">
+        Musik
+      </a>
+      <a href="#warisan" class="px-5 py-3 text-[15px] font-medium text-[#1b211e] hover:bg-[#fffaf4] hover:text-[#9CBE60] transition-colors">
+        Warisan
+      </a>
+      <div class="p-3 border-t border-[#e9e4d7] mt-1">
+        <a href="#contact" class="block text-center w-full py-2.5 border-[1.5px] border-[#e9e4d7] rounded-full text-[14px] font-semibold text-[#1b211e] hover:border-[#9CBE60] hover:text-[#9CBE60] transition-colors">
+          Get In Touch
+        </a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<!-- Script Fungsionalitas Hamburger Toggle -->
+<script>
+  const hamburgerBtn = document.getElementById('hamburger-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  if (hamburgerBtn && mobileMenu) {
+    hamburgerBtn.addEventListener('click', () => {
+      const isHidden = mobileMenu.classList.toggle('hidden');
+      hamburgerBtn.setAttribute('aria-expanded', !isHidden);
+    });
+
+    // Menutup menu jika mengklik di luar area navbar/menu
+    document.addEventListener('click', (event) => {
+      if (!hamburgerBtn.contains(event.target) && !mobileMenu.contains(event.target)) {
+        mobileMenu.classList.add('hidden');
+        hamburgerBtn.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+</script>
+    <main>
+      <!-- Hero Section -->
+<section
+  id="hero"
+  aria-labelledby="hero-title"
+  class="relative isolate min-h-screen overflow-hidden bg-[#FBFEED] flex flex-col justify-between"
+  style="perspective: 1200px;"
+>
+  <div
+    aria-hidden="true"
+    class="pointer-events-none absolute inset-0 -z-10 h-full w-full"
+  >
+    <!-- Background Hitam Melengkung di Bawah -->
+    <svg
+      focusable="false"
+      class="absolute inset-0 h-full w-full"
+      viewBox="0 0 1000 900"
+      preserveAspectRatio="none"
+    >
+      <path
+        d="M0 540 C200 660 320 770 500 770 C680 770 800 660 1000 540 V900 H0 Z"
+        fill="#171A18"
+      />
+    </svg>
+
+    <!-- 5 Garis Melengkung Background -->
+    <svg
+      focusable="false"
+      class="absolute inset-0 h-full w-full"
+      viewBox="0 0 1000 900"
+      preserveAspectRatio="none"
+      fill="none"
+    >
+      <g id="hero-curved-lines" stroke="#A3B18A" stroke-linecap="round">
+        <path
+          class="hero-line"
+          d="M -50 180 Q 500 520 1050 180"
+          stroke-width="1"
+          opacity="0.35"
+        />
+        <path
+          class="hero-line"
+          d="M -50 280 Q 500 600 1050 280"
+          stroke-width="1"
+          opacity="0.35"
+        />
+        <path
+          class="hero-line"
+          d="M -50 380 Q 500 680 1050 380"
+          stroke-width="1"
+          opacity="0.35"
+        />
+        <path
+          class="hero-line"
+          d="M -50 780 Q 500 560 1050 780"
+          stroke-width="2"
+          opacity="0.55"
+        />
+        <path
+          class="hero-line"
+          d="M -50 860 Q 500 640 1050 860"
+          stroke-width="2"
+          opacity="0.55"
+        />
+      </g>
+    </svg>
+  </div>
+
+  <div
+    class="relative z-10 mx-auto flex w-full max-w-7xl flex-1 flex-col items-center justify-between px-4 pt-12 pb-6 text-center sm:px-6 md:pt-16 lg:px-8"
+  >
+    <!-- Title & Floating Badges Group -->
+    <header class="relative mt-4 w-full max-w-5xl md:mt-8">
+      <!-- Floating Badge Tags (Semantic List, Anti-Collision Layout) -->
+      <ul
+        aria-label="Kategori Budaya Nusantara"
+        class="floating-tags pointer-events-none select-none"
+      >
+        <!-- 1. Kiri Atas: Kris -->
+        <li
+          class="tag-wrapper absolute -top-9 left-[14%] sm:left-[20%] md:-top-8 md:left-[23%] z-20"
+        >
+          <span
+            data-rotation="8"
+            class="tag inline-flex items-center justify-center rounded-[10px] border border-white/85 bg-gradient-to-r from-[#762FF9]/65 via-[#762FF9]/30 to-white/60 px-5 py-1.5 text-xs sm:text-sm md:text-base font-serif font-semibold text-[#171A18] shadow-lg backdrop-blur-md"
+          >
+            Kris
+          </span>
+        </li>
+
+        <!-- 2. Kanan Atas: Batik -->
+        <li
+          class="tag-wrapper absolute -top-9 right-[14%] sm:right-[20%] md:-top-8 md:right-[23%] z-20"
+        >
+          <span
+            data-rotation="-6"
+            class="tag inline-flex items-center justify-center rounded-[10px] border border-white/85 bg-gradient-to-r from-pink-500/65 via-pink-400/30 to-white/60 px-5 py-1.5 text-xs sm:text-sm md:text-base font-serif font-semibold text-[#171A18] shadow-lg backdrop-blur-md"
+          >
+            Batik
+          </span>
+        </li>
+
+        <!-- 3. Kiri Luar: Bahasa Daerah -->
+        <li
+          class="tag-wrapper absolute top-2 left-0 sm:left-[2%] md:top-1 md:left-[2%] z-20"
+        >
+          <span
+            data-rotation="4"
+            class="tag inline-flex items-center justify-center rounded-[10px] border border-white/85 bg-gradient-to-r from-orange-400/75 via-orange-300/35 to-white/60 px-4 py-1.5 text-xs sm:text-sm md:text-base font-serif font-semibold text-[#171A18] shadow-lg backdrop-blur-md"
+          >
+            Bahasa Daerah
+          </span>
+        </li>
+
+        <!-- 4. Kanan Luar: Rumah adat -->
+        <li
+          class="tag-wrapper absolute top-2 right-0 sm:right-[2%] md:top-2 md:right-[2%] z-20"
+        >
+          <span
+            data-rotation="-3"
+            class="tag inline-flex items-center justify-center rounded-[10px] border border-white/85 bg-gradient-to-r from-teal-400/65 via-teal-300/35 to-white/60 px-4 py-1.5 text-xs sm:text-sm md:text-base font-serif font-semibold text-[#171A18] shadow-lg backdrop-blur-md"
+          >
+            Rumah adat
+          </span>
+        </li>
+
+        <!-- 5. Bawah Kiri (Di bawah Digital Cultural): Alat Musik -->
+        <li
+          class="tag-wrapper absolute -bottom-11 left-[12%] sm:left-[20%] md:-bottom-12 md:left-[25%] z-20"
+        >
+          <span
+            data-rotation="-3"
+            class="tag inline-flex items-center justify-center rounded-[10px] border border-white/85 bg-gradient-to-r from-cyan-400/70 via-cyan-300/35 to-white/60 px-5 py-1.5 text-xs sm:text-sm md:text-base font-serif font-semibold text-[#171A18] shadow-lg backdrop-blur-md"
+          >
+            Alat Musik
+          </span>
+        </li>
+
+        <!-- 6. Bawah Kanan (Di bawah Digital Cultural): Wayang -->
+        <li
+          class="tag-wrapper absolute -bottom-11 right-[14%] sm:right-[22%] md:-bottom-12 md:right-[27%] z-20"
+        >
+          <span
+            data-rotation="3"
+            class="tag inline-flex items-center justify-center rounded-[10px] border border-white/85 bg-gradient-to-r from-lime-400/70 via-lime-300/35 to-white/60 px-5 py-1.5 text-xs sm:text-sm md:text-base font-serif font-semibold text-[#171A18] shadow-lg backdrop-blur-md"
+          >
+            Wayang
+          </span>
+        </li>
+      </ul>
+
+      <!-- Main Heading (Single Semantic H1) -->
+      <h1
+        id="hero-title"
+        class="relative z-10 flex flex-col items-center leading-[1.08]"
+      >
+        <span
+          class="hero-title-line text-5xl font-extrabold tracking-tight text-[#171A18] sm:text-6xl md:text-[84px]"
+        >
+          Pusaka
+        </span>
+        <span
+          class="hero-title-line mt-1 bg-gradient-to-r from-[#234F10] via-[#4D8B28] to-[#99D93F] bg-clip-text pb-2 text-5xl font-extrabold tracking-wide text-transparent sm:text-6xl md:text-[76px]"
+        >
+          Digital Cultural
+        </span>
+      </h1>
+    </header>
+
+    <!-- ================= 3. FOLDER & CULTURAL ASSETS ================= -->
+    <div
+      id="folder-wrapper"
+      class="relative mt-32 sm:mt-40 md:mt-48 mb-4 flex w-full max-w-4xl items-center justify-center"
+      style="transform-style: preserve-3d;"
+    >
+      <!-- LAYER 0: White Glow/Shine di Belakang Folder -->
+      <div
+        id="folder-glow"
+        aria-hidden="true"
+        class="pointer-events-none absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[320px] w-[380px] rounded-full bg-white opacity-95 blur-[80px] sm:h-[420px] sm:w-[580px] -z-10"
+      ></div>
+
+      <!-- CONTAINER UTAMA FOLDER -->
+      <div
+        id="folder-box"
+        class="relative flex items-center justify-center w-[310px] sm:w-[400px] md:w-[460px] h-[220px] sm:h-[260px] md:h-[290px]"
+        style="transform-style: preserve-3d;"
+      >
+        <!-- LAYER 0.5: Bagian Belakang Dalam Folder (Terlihat saat folder membuka) -->
+        <div
+          id="folder-back-plate"
+          aria-hidden="true"
+          class="absolute inset-x-3 bottom-2 z-[1] h-[88%] rounded-[32px] bg-[#3A5A1C]/40 border border-white/40 backdrop-blur-sm"
+        ></div>
+
+        <!-- LAYER 1: 10 ASET GAMBAR BUDAYA (Menyebar keluar dari dalam folder) -->
+        <div
+          id="cultural-assets-group"
+          class="absolute inset-0 z-10 overflow-visible"
+        >
+          <!-- 1. Keris (Kiri Paling Luar) -->
+          <img
+            src="asset/Keris.png"
+            alt="Keris"
+            data-rot="-24"
+            class="cultural-card cursor-pointer absolute -top-36 -left-16 sm:-top-48 sm:-left-28 md:-top-56 md:-left-36 w-[110px] sm:w-[145px] md:w-[175px] origin-bottom drop-shadow-xl z-[1]"
+          />
+
+          <!-- 2. Kecapi (Kiri Atas) -->
+          <img
+            src="asset/kecapi.png"
+            alt="Kecapi"
+            data-rot="-12"
+            class="cultural-card cursor-pointer absolute -top-40 -left-2 sm:-top-52 sm:-left-6 md:-top-60 md:-left-8 w-[90px] sm:w-[120px] md:w-[140px] origin-bottom drop-shadow-xl z-[2]"
+          />
+
+          <!-- 3. Batik 5 (Kiri Bawah Parang) -->
+          <img
+            src="asset/batik 5.png"
+            alt="Batik 5"
+            data-rot="-15"
+            class="cultural-card cursor-pointer absolute -top-20 -left-8 sm:-top-24 sm:-left-12 md:-top-28 md:-left-16 w-[115px] sm:w-[150px] md:w-[175px] origin-bottom rounded-2xl drop-shadow-lg z-[3]"
+          />
+
+          <!-- 4. Batik 1 (Tengah Kiri Oranye) -->
+          <img
+            src="asset/batik 1.png"
+            alt="Batik 1"
+            data-rot="-2"
+            class="cultural-card cursor-pointer absolute -top-28 left-8 sm:-top-36 sm:left-10 md:-top-40 md:left-12 w-[125px] sm:w-[160px] md:w-[190px] origin-bottom rounded-2xl drop-shadow-lg z-[4]"
+          />
+
+          <!-- 5. Kipas (Tengah Paling Atas) -->
+          <img
+            src="asset/kipas.png"
+            alt="Kipas"
+            data-rot="6"
+            class="cultural-card cursor-pointer absolute -top-40 left-[44%] sm:-top-52 md:-top-60 -translate-x-1/2 w-[100px] sm:w-[130px] md:w-[155px] origin-bottom drop-shadow-lg z-[5]"
+          />
+
+          <!-- 6. Batik 3 (Tengah Coklat/Gelap) -->
+          <img
+            src="asset/batik 3.png"
+            alt="Batik 3"
+            data-rot="4"
+            class="cultural-card cursor-pointer absolute -top-24 left-[34%] sm:-top-28 sm:left-[35%] md:-top-32 md:left-[36%] w-[120px] sm:w-[155px] md:w-[180px] origin-bottom rounded-2xl drop-shadow-2xl z-[7]"
+          />
+
+          <!-- 7. Batik 4 (Tengah Kanan Biru Mega Mendung) -->
+          <img
+            src="asset/batik 4.png"
+            alt="Batik 4"
+            data-rot="8"
+            class="cultural-card cursor-pointer absolute -top-28 right-8 sm:-top-36 sm:right-10 md:-top-40 md:right-12 w-[125px] sm:w-[160px] md:w-[190px] origin-bottom rounded-2xl drop-shadow-lg z-[6]"
+          />
+
+          <!-- 8. Wayang (Kanan Atas) -->
+          <img
+            src="asset/wayang.png"
+            alt="Wayang"
+            data-rot="16"
+            class="cultural-card cursor-pointer absolute -top-44 -right-6 sm:-top-56 sm:-right-12 md:-top-64 md:-right-16 w-[115px] sm:w-[155px] md:w-[185px] origin-bottom drop-shadow-2xl z-[8]"
+          />
+
+          <!-- 9. Suling (Kanan Paling Luar) -->
+          <img
+            src="asset/suling.png"
+            alt="Suling"
+            data-rot="32"
+            class="cultural-card cursor-pointer absolute -top-28 -right-16 sm:-top-36 sm:-right-28 md:-top-44 md:-right-36 w-[90px] sm:w-[125px] md:w-[150px] origin-bottom drop-shadow-xl z-[9]"
+          />
+
+          <!-- 10. Batik 2 (Kanan Bawah Kawung) -->
+          <img
+            src="asset/batik 2.png"
+            alt="Batik 2"
+            data-rot="16"
+            class="cultural-card cursor-pointer absolute -top-20 -right-6 sm:-top-24 sm:-right-10 md:-top-28 md:-right-14 w-[115px] sm:w-[150px] md:w-[175px] origin-bottom rounded-2xl drop-shadow-lg z-[10]"
+          />
+        </div>
+
+        <!-- LAYER 2 (Paling Depan): Folder Hijau + Efek Frosted Glass -->
+        <div
+          id="folder-front-flap"
+          class="folder-front relative z-20 h-full w-full pointer-events-none origin-bottom"
+          style="transform-style: preserve-3d;"
+        >
+          <!-- Lapisan Blur (Membuat gambar batik di balik folder tampak nge-blur seperti Figma) -->
+          <div
+            class="absolute inset-0 bg-[#6B8E23]/25 backdrop-blur-md"
+            style="
+              -webkit-mask-image: url('asset/Vector 27.png');
+              mask-image: url('asset/Vector 27.png');
+              -webkit-mask-size: contain;
+              mask-size: contain;
+              -webkit-mask-repeat: no-repeat;
+              mask-repeat: no-repeat;
+              -webkit-mask-position: bottom center;
+              mask-position: bottom center;
+            "
+          ></div>
+
+          <!-- Gambar Asli Vector 27 -->
+          <img
+            src="asset/Vector 27.png"
+            alt="Pusaka Green Folder"
+            class="folder-green-img relative z-10 h-full w-full object-contain object-bottom opacity-85 drop-shadow-2xl"
+          />
+        </div>
+
+        <!-- LAYER 3 (Outline/Shadow Trapesium Bawah Folder) -->
+        <div
+          aria-hidden="true"
+          class="folder-trapezoid absolute -bottom-3 inset-x-2 z-0 h-[92%] rounded-[40px] border border-white/40 bg-white/10 shadow-2xl backdrop-blur-sm"
+        ></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const cards = gsap.utils.toArray(".cultural-card");
+    const tags = gsap.utils.toArray(".tag");
+    const tagWrappers = gsap.utils.toArray(".tag-wrapper");
+    const folderBox = document.getElementById("folder-box");
+    const folderFlap = document.getElementById("folder-front-flap");
+    const folderGlow = document.getElementById("folder-glow");
+
+    // Set rotasi awal masing-masing aset budaya dan badge sesuai atribut data
+    cards.forEach((card) => {
+      const rot = parseFloat(card.getAttribute("data-rot")) || 0;
+      gsap.set(card, { rotation: rot });
+    });
+
+    tags.forEach((tag) => {
+      const rot = parseFloat(tag.getAttribute("data-rotation")) || 0;
+      gsap.set(tag, { rotation: rot });
+    });
+
+    // Persiapan garis SVG background
+    gsap.utils.toArray(".hero-line").forEach((line) => {
+      const length = line.getTotalLength();
+      gsap.set(line, { strokeDasharray: length, strokeDashoffset: length });
+    });
+
+    // Master Timeline saat halaman pertama kali dibuka
+    const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+
+    // 1. Garis Background & Judul Utama Muncul
+    tl.to(".hero-line", {
+      strokeDashoffset: 0,
+      duration: 1.4,
+      stagger: 0.1,
+      ease: "power2.inOut",
+    })
+      .from(
+        ".hero-title-line",
+        {
+          y: 40,
+          opacity: 0,
+          duration: 0.8,
+          stagger: 0.12,
+        },
+        "-=1.1"
+      )
+
+      // 2. Folder Muncul dari Bawah dalam Keadaan Tertutup
+      .from(
+        "#folder-wrapper",
+        {
+          y: 120,
+          scale: 0.85,
+          opacity: 0,
+          duration: 0.75,
+          ease: "back.out(1.4)",
+        },
+        "-=0.7"
+      )
+
+      // 3. Efek Folder Membuka (3D Tilt ke Depan + Cahaya Bersinar)
+      .to(
+        folderFlap,
+        {
+          rotationX: -32,
+          scaleY: 0.92,
+          duration: 0.45,
+          ease: "power2.out",
+        },
+        "-=0.1"
+      )
+      .fromTo(
+        folderGlow,
+        { scale: 0.6, opacity: 0.3 },
+        { scale: 1.25, opacity: 1, duration: 0.5, ease: "power2.out" },
+        "<"
+      )
+
+      // 4. 10 Gambar Budaya Melesat Keluar (Pop-Up & Fan-Out) dari Dalam Folder
+      .from(
+        cards,
+        {
+          y: 210,
+          x: (index, target) => {
+            const rect = target.getBoundingClientRect();
+            const parentRect = folderBox.getBoundingClientRect();
+            const folderCenterX = parentRect.left + parentRect.width / 2;
+            const cardCenterX = rect.left + rect.width / 2;
+            return folderCenterX - cardCenterX;
+          },
+          scale: 0.15,
+          rotation: 0,
+          opacity: 0,
+          duration: 1.15,
+          stagger: {
+            each: 0.055,
+            from: "center",
+          },
+          ease: "back.out(1.65)",
+        },
+        "-=0.25"
+      )
+
+      // 5. Keenam Card/Badge Terbang Keluar dari Dalam Folder ke Posisi Atas
+      .from(
+        tagWrappers,
+        {
+          x: (index, target) => {
+            const rect = target.getBoundingClientRect();
+            const folderRect = folderBox.getBoundingClientRect();
+            const folderCenterX = folderRect.left + folderRect.width / 2;
+            const tagCenterX = rect.left + rect.width / 2;
+            return folderCenterX - tagCenterX;
+          },
+          y: (index, target) => {
+            const rect = target.getBoundingClientRect();
+            const folderRect = folderBox.getBoundingClientRect();
+            const folderCenterY = folderRect.top + folderRect.height * 0.45;
+            const tagCenterY = rect.top + rect.height / 2;
+            return folderCenterY - tagCenterY;
+          },
+          scale: 0.1,
+          opacity: 0,
+          duration: 1.1,
+          stagger: {
+            each: 0.07,
+            from: "center",
+          },
+          ease: "expo.out",
+        },
+        "-=0.95"
+      )
+
+      // 6. Folder Menutup Kembali dengan Efek Membal Halus Setelah Mengeluarkan Isi
+      .to(
+        folderFlap,
+        {
+          rotationX: 0,
+          scaleY: 1,
+          duration: 0.7,
+          ease: "elastic.out(1, 0.6)",
+        },
+        "-=0.5"
+      )
+      .to(
+        folderGlow,
+        {
+          scale: 1,
+          opacity: 0.95,
+          duration: 0.8,
+          ease: "sine.inOut",
+        },
+        "<"
+      )
+
+      // 7. Setelah Semua Rapi, Aktifkan Animasi Melayang Teratur (Anti-Tabrakan)
+      .add(() => {
+        // Animasi melayang terisolasi di dalam wrapper masing-masing (maksimal ±6px vertikal)
+        tags.forEach((tag, i) => {
+          const baseRot = parseFloat(tag.getAttribute("data-rotation")) || 0;
+          gsap.to(tag, {
+            y: i % 2 === 0 ? -6 : 6,
+            rotation: baseRot + (i % 2 === 0 ? 1.5 : -1.5),
+            duration: 2.2 + (i % 3) * 0.3,
+            repeat: -1,
+            yoyo: true,
+            ease: "sine.inOut",
+          });
+        });
+
+        // Efek bernapas halus pada cahaya belakang folder
+        gsap.to(folderGlow, {
+          scale: 1.08,
+          opacity: 0.8,
+          duration: 3,
+          repeat: -1,
+          yoyo: true,
+          ease: "sine.inOut",
+        });
+      });
+
+    // 8. Interaksi Hover Individual pada 10 Aset Budaya di Dalam Folder
+    cards.forEach((card) => {
+      const baseRot = parseFloat(card.getAttribute("data-rot")) || 0;
+      card.addEventListener("mouseenter", () => {
+        gsap.to(card, {
+          y: -18,
+          scale: 1.07,
+          rotation: baseRot * 0.8,
+          duration: 0.35,
+          ease: "back.out(2)",
+          overwrite: "auto",
+        });
+      });
+      card.addEventListener("mouseleave", () => {
+        gsap.to(card, {
+          y: 0,
+          scale: 1,
+          rotation: baseRot,
+          duration: 0.45,
+          ease: "power2.out",
+          overwrite: "auto",
+        });
+      });
+    });
+  });
+</script>
+
+<!-- Peta Budaya Interaktif Nusantara -->
+<section
+  id="peta-budaya"
+  class="culture-section"
+  aria-labelledby="map-section-title"
+>
+  <img
+    src="assets/kiri-atas.png"
+    class="cloud cloud-top-left"
+    alt=""
+    aria-hidden="true"
+    loading="lazy"
+  />
+  <img
+    src="asset/kiri bawah.png"
+    class="cloud cloud-bottom-left"
+    alt=""
+    aria-hidden="true"
+    loading="lazy"
+  />
+  <img
+    src="asset/Tengah kanan.png"
+    class="cloud cloud-bottom-right"
+    alt=""
+    aria-hidden="true"
+    loading="lazy"
+  />
+
+  <div class="culture-content">
+    <header class="section-heading">
+      <div class="title-pill">
+        <h2 id="map-section-title">Peta Budaya Interaktif Nusantara</h2>
+      </div>
+      <div class="title-accent" aria-hidden="true"></div>
+    </header>
+
+    <div class="culture-layout">
+      <div class="map-panel" id="map-panel-card">
+        <div class="map-viewport" id="map-viewport">
+          <svg
+            id="indonesia-map"
+            class="indonesia-map"
+            viewBox="0 0 1000 430"
+            role="group"
+            aria-label="Peta interaktif kawasan Indonesia"
+            xmlns="http://www.w3.org/2000/svg"
+            stroke-linejoin="round"
+            stroke-linecap="round"
+          >
+            <title>Peta Kepulauan Nusantara</title>
+
+            <g id="map-camera-group">
+              <g
+                class="map-region"
+                data-region="sumatra"
+                tabindex="0"
+                role="button"
+                aria-label="Pulau Sumatra"
+                aria-pressed="false"
+              >
+                <path
+                  d="M58 92 C66 89 82 95 96 102 C108 109 116 123 128 132 C142 142 152 156 160 163 C166 168 173 162 178 168 C185 176 184 188 195 196 C208 205 224 211 228 221 C231 229 218 237 224 245 C232 255 251 260 258 273 C264 285 262 308 253 317 C244 324 235 316 227 323 C219 329 212 318 201 308 C184 292 162 273 151 251 C141 232 142 214 132 199 C119 181 98 165 86 144 C73 123 48 97 58 92 Z"
+                />
+                <path
+                  d="M68 140 C75 139 87 148 89 155 C90 160 80 160 73 154 C67 149 63 142 68 140 Z"
+                />
+                <path
+                  d="M93 171 C102 170 116 179 117 188 C118 196 108 201 102 194 C96 186 86 173 93 171 Z"
+                />
+                <path
+                  d="M124 221 C131 220 140 229 140 239 C140 246 131 247 125 239 C120 232 118 222 124 221 Z"
+                />
+                <path
+                  d="M245 232 C254 229 264 236 270 245 C277 254 287 258 283 266 C279 273 268 268 262 259 C255 250 238 235 245 232 Z"
+                />
+                <path
+                  d="M296 254 C304 252 313 258 312 266 C311 273 301 274 297 268 C293 262 290 256 296 254 Z"
+                />
+              </g>
+
+              <g
+                class="map-region"
+                data-region="jawa"
+                tabindex="0"
+                role="button"
+                aria-label="Pulau Jawa"
+                aria-pressed="false"
+              >
+                <path
+                  d="M250 335 C258 332 264 326 271 320 C277 316 285 325 292 323 C299 321 304 318 311 323 C317 328 325 324 331 329 C338 335 349 342 361 341 C371 340 377 331 387 334 C397 337 405 344 415 349 C425 354 438 352 446 355 C449 362 446 371 450 378 C442 381 432 371 422 371 C411 371 402 376 391 372 C379 368 370 359 357 359 C345 359 336 364 324 360 C313 356 303 357 292 355 C283 353 280 343 271 341 C262 339 245 339 250 335 Z"
+                />
+              </g>
+
+              <g
+                class="map-region"
+                data-region="kalimantan"
+                tabindex="0"
+                role="button"
+                aria-label="Pulau Kalimantan"
+                aria-pressed="false"
+              >
+                <path
+                  d="M348 168 C355 172 358 184 369 186 C382 188 397 183 406 173 C413 166 421 177 431 177 C441 177 447 164 456 159 C466 154 464 142 472 134 C482 124 503 122 512 132 C518 139 509 146 513 154 C518 164 516 175 526 182 C535 188 543 194 540 201 C535 206 520 198 514 205 C508 212 513 224 507 232 C501 239 489 242 486 252 C483 262 492 273 485 282 C476 293 457 302 449 298 C444 295 452 284 446 280 C439 276 429 289 420 287 C411 285 405 278 396 282 C387 286 378 279 371 272 C363 264 362 249 354 241 C346 233 341 241 338 232 C334 221 331 208 334 195 C337 183 342 165 348 168 Z"
+                />
+              </g>
+
+              <g
+                class="map-region active"
+                data-region="sulawesi"
+                tabindex="0"
+                role="button"
+                aria-label="Pulau Sulawesi"
+                aria-pressed="true"
+              >
+                <path
+                  d="M566 184 C575 180 584 189 596 191 C613 194 633 192 648 186 C657 182 664 173 669 178 C673 183 666 196 657 204 C646 213 631 217 616 213 C602 209 583 206 574 216 C567 224 573 239 581 243 C588 246 591 234 599 235 C609 236 622 224 631 228 C637 231 633 241 625 244 C614 248 602 255 595 263 C591 268 604 276 610 286 C616 296 612 305 619 314 C614 321 602 328 595 322 C589 316 592 302 587 292 C583 284 576 281 572 289 C567 299 570 315 570 328 C570 336 561 344 554 340 C546 335 549 321 550 309 C551 296 551 285 542 278 C534 272 526 266 532 259 C539 251 545 242 545 229 C545 215 555 189 566 184 Z"
+                />
+              </g>
+
+              <g
+                class="map-region"
+                data-region="bali-nusa"
+                tabindex="0"
+                role="button"
+                aria-label="Kepulauan Bali dan Nusa Tenggara"
+                aria-pressed="false"
+              >
+                <path
+                  d="M472 374 C480 371 489 376 492 372 C494 368 489 361 495 362 C503 364 509 371 518 373 C524 375 524 383 517 386 C508 389 498 384 489 387 C480 390 468 386 467 380 C466 376 469 375 472 374 Z"
+                />
+                <path
+                  d="M535 372 C545 369 556 372 565 376 C573 379 580 368 588 369 C595 370 595 381 587 387 C578 393 566 396 555 391 C545 386 528 385 531 376 C532 373 533 373 535 372 Z"
+                />
+                <path
+                  d="M512 394 C522 391 534 394 541 402 C546 408 552 415 545 418 C537 421 529 412 521 407 C514 403 505 397 512 394 Z"
+                />
+                <path
+                  d="M602 396 C612 391 623 393 632 386 C641 379 652 384 662 381 C670 378 677 382 671 390 C665 398 656 403 647 399 C638 395 629 406 620 413 C611 419 598 417 596 408 C595 401 598 398 602 396 Z"
+                />
+              </g>
+
+              <g
+                class="map-region"
+                data-region="maluku"
+                tabindex="0"
+                role="button"
+                aria-label="Kepulauan Maluku"
+                aria-pressed="false"
+              >
+                <path
+                  d="M686 168 C693 166 696 177 699 184 C703 181 710 177 713 182 C715 187 706 193 709 199 C713 205 721 211 719 219 C717 224 712 214 706 211 C699 208 696 216 699 224 C702 231 706 238 701 241 C695 243 691 229 687 219 C683 208 680 196 678 184 C677 175 681 170 686 168 Z"
+                />
+                <path
+                  d="M648 282 C656 280 666 284 674 289 C680 293 674 301 667 303 C659 305 650 296 646 289 C644 285 645 283 648 282 Z"
+                />
+                <path
+                  d="M692 276 C702 273 712 280 723 278 C734 276 745 284 748 295 C750 302 742 304 736 298 C728 291 716 293 705 291 C696 289 687 281 692 276 Z"
+                />
+              </g>
+
+              <g
+                class="map-region"
+                data-region="papua"
+                tabindex="0"
+                role="button"
+                aria-label="Pulau Papua"
+                aria-pressed="false"
+              >
+                <path
+                  d="M758 228 C771 224 785 229 798 231 C806 232 813 241 810 248 C806 255 811 266 818 269 C823 271 826 262 830 266 C834 272 835 284 842 283 C848 282 855 268 866 259 C876 251 887 244 899 249 C914 256 931 264 947 269 L947 362 C941 366 937 375 942 383 C945 388 947 394 947 404 C938 407 930 398 921 391 C912 384 899 385 888 385 C880 385 876 378 882 371 C887 365 896 367 898 359 C900 351 891 344 888 336 C884 326 876 319 866 315 C854 311 841 308 830 301 C820 294 810 298 801 304 C793 309 784 301 786 292 C788 284 796 280 792 275 C787 270 774 282 770 274 C767 268 775 263 782 264 C789 265 789 256 781 253 C771 249 758 249 753 241 C750 235 753 230 758 228 Z"
+                />
+              </g>
+
+              <!-- Indikator Radar Dinamis pada Pulau Aktif -->
+              <g
+                id="map-radar-beacon"
+                class="map-radar-beacon"
+                aria-hidden="true"
+                transform="translate(595, 250)"
+              >
+                <circle class="radar-ring radar-ring-1" cx="0" cy="0" r="8" />
+                <circle class="radar-ring radar-ring-2" cx="0" cy="0" r="8" />
+                <circle class="radar-core" cx="0" cy="0" r="5" />
+              </g>
+            </g>
+          </svg>
+
+          <!-- Floating Magnetic Tooltip saat Hover Pulau -->
+          <div id="map-cursor-tooltip" class="map-cursor-tooltip" aria-hidden="true">
+            <span class="tooltip-dot"></span>
+            <span id="tooltip-region-text">Jelajahi Sulawesi</span>
+          </div>
+        </div>
+
+        <p class="map-hint">
+          <span class="hint-dot" aria-hidden="true"></span>
+          <span>Pilih wilayah pada peta untuk menjelajahi budayanya.</span>
+        </p>
+      </div>
+
+      <aside
+        class="info-panel"
+        id="info-panel-card"
+        aria-labelledby="region-name"
+        aria-live="polite"
+        aria-atomic="true"
+      >
+        <header class="info-top">
+          <span class="info-label">WILAYAH NUSANTARA</span>
+          <div class="region-title-mask">
+            <h3 id="region-name">Sulawesi</h3>
+          </div>
+        </header>
+
+        <figure class="region-media" id="region-media-wrapper" style="margin: 0">
+          <img
+            id="region-image"
+            class="region-image"
+            src="assets/sulawesi.jpg"
+            alt="Budaya Sulawesi"
+          />
+        </figure>
+
+        <p id="region-description" class="region-description">
+          Sulawesi memiliki keragaman suku, bahasa, seni, dan tradisi yang
+          diwariskan dari generasi ke generasi.
+        </p>
+
+        <div class="info-divider" aria-hidden="true"></div>
+
+        <h4 class="info-subtitle">Warisan Unggulan Wilayah</h4>
+
+        <ul id="culture-list" class="culture-list">
+          <li>Rumah Adat Tongkonan</li>
+          <li>Tari Kipas Pakarena</li>
+          <li>Tenun Bugis-Makassar</li>
+          <li>Alat Musik Kacapi</li>
+          <li>Upacara Rambu Solo'</li>
+        </ul>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- CSS Khusus Section Peta Budaya Nusantara (Beserta Responsif & Efek Animasi) -->
+<style>
+  .culture-section {
+    --map-bg: #181A19;
+    --map-green: #8eae12;
+    --map-green-dark: #587d0c;
+    --map-lime: #c7ff76;
+    --map-cream: #f8fae8;
+    --map-text: #18221b;
+
+    position: relative;
+    isolation: isolate;
+    width: 100%;
+    min-height: auto;
+    padding: 58px 4% 64px;
+    overflow: hidden;
+
+    background: var(--map-bg);
+    color: var(--map-text);
+    font-family: "Poppins", sans-serif;
+    box-sizing: border-box;
+    perspective: 1400px;
+  }
+
+  .culture-section *,
+  .culture-section *::before,
+  .culture-section *::after {
+    box-sizing: border-box;
+  }
+
+  .culture-content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 1420px;
+    margin: 0 auto;
+  }
+
+  /* =========================================
+     DEKORASI AWAN
+  ========================================= */
+  .culture-section .cloud {
+    position: absolute;
+    z-index: 0;
+    display: block;
+    width: clamp(180px, 22vw, 330px);
+    height: auto;
+    object-fit: contain;
+    opacity: 0.58;
+    pointer-events: none;
+    user-select: none;
+    will-change: transform;
+  }
+
+  .culture-section .cloud-top-left {
+    top: 0;
+    left: -20px;
+    width: clamp(190px, 22vw, 330px);
+  }
+
+  .culture-section .cloud-bottom-left {
+    bottom: 0;
+    left: -22px;
+    width: clamp(190px, 22vw, 330px);
+  }
+
+  .culture-section .cloud-bottom-right {
+    right: -22px;
+    bottom: 0;
+    width: clamp(190px, 22vw, 330px);
+    transform: scaleX(-1);
+  }
+
+  /* =========================================
+     JUDUL KAPSUL
+  ========================================= */
+  .culture-section .section-heading {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: min(100%, 1010px);
+    min-height: 82px;
+    margin: 0 0 28px;
+  }
+
+  .culture-section .title-pill {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    width: 86%;
+    min-height: 82px;
+    padding: 14px 30px;
+
+    background: #171f1b;
+    border: 2px solid var(--map-lime);
+    border-radius: 999px;
+
+    box-shadow:
+      0 0 0 1px rgb(199 255 118 / 10%),
+      0 0 15px rgb(199 255 118 / 7%);
+  }
+
+  .culture-section .title-pill h2 {
+    margin: 0;
+    color: #e1ff9d;
+    font-family: "Poppins", sans-serif;
+    font-size: clamp(23px, 3vw, 42px);
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: -0.8px;
+  }
+
+  .culture-section .title-accent {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    right: 0;
+    width: 39%;
+    height: 100%;
+
+    background: linear-gradient(100deg, #b5f85f, #caff83);
+    border-radius: 0 999px 999px 0;
+    transform-origin: left center;
+  }
+
+  /* =========================================
+     LAYOUT PETA DAN INFORMASI
+  ========================================= */
+  .culture-section .culture-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 2.05fr) minmax(280px, 0.95fr);
+    align-items: stretch;
+    gap: 14px;
+    width: 100%;
+  }
+
+  /* =========================================
+     PANEL PETA & VIEWPORT INTERAKTIF
+  ========================================= */
+  .culture-section .map-panel {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 0;
+    min-height: 420px;
+    padding: 22px 18px 14px;
+
+    background:
+      radial-gradient(circle at 50% 45%, rgb(199 255 118 / 18%), transparent 70%),
+      var(--map-cream);
+    border: 1.5px solid #b7d879;
+    border-radius: 14px;
+    box-shadow: 0 12px 32px rgb(0 0 0 / 16%);
+    transform-style: preserve-3d;
+    overflow: hidden;
+  }
+
+  .culture-section .map-viewport {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 10px;
+  }
+
+  .culture-section .indonesia-map {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 410px;
+    overflow: visible;
+  }
+
+  .culture-section .map-region {
+    fill: var(--map-green);
+    stroke: var(--map-green-dark);
+    stroke-width: 2.2;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+    cursor: pointer;
+    outline: none;
+    transform-box: fill-box;
+    transform-origin: center;
+    transition:
+      fill 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+      stroke 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 0.35s ease,
+      filter 0.35s ease;
+  }
+
+  /* Dimming halus untuk pulau tidak aktif agar pulau aktif lebih stand-out */
+  .culture-section .indonesia-map.has-active .map-region:not(.active):not(:hover) {
+    opacity: 0.62;
+  }
+
+  .culture-section .map-region:hover {
+    fill: #b4df28;
+    stroke: #4e6e07;
+    opacity: 1 !important;
+    filter: drop-shadow(0 8px 10px rgb(73 105 0 / 28%));
+  }
+
+  .culture-section .map-region.active {
+    fill: #a5ce1d;
+    stroke: #3f5d05;
+    stroke-width: 3.2;
+    opacity: 1;
+    filter: drop-shadow(0 10px 14px rgb(73 105 0 / 38%));
+  }
+
+  .culture-section .map-region:focus-visible {
+    stroke: #263d0a;
+    stroke-width: 5;
+    filter: drop-shadow(0 0 6px rgb(125 170 20 / 65%));
+  }
+
+  /* Radar Beacon di titik pulau yang aktif */
+  .culture-section .map-radar-beacon {
+    pointer-events: none;
+  }
+
+  .culture-section .radar-core {
+    fill: #ffffff;
+    stroke: #3f5d05;
+    stroke-width: 2.5;
+  }
+
+  .culture-section .radar-ring {
+    fill: none;
+    stroke: #587d0c;
+    stroke-width: 2;
+    transform-origin: center;
+    transform-box: fill-box;
+  }
+
+  /* Floating Magnetic Cursor Tooltip */
+  .culture-section .map-cursor-tooltip {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 20;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 6px 13px;
+    background: rgb(21 30 26 / 92%);
+    color: #e1ff9d;
+    border: 1px solid rgb(199 255 118 / 45%);
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    transform: translate(-50%, -135%) scale(0.85);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 6px 18px rgb(0 0 0 / 25%);
+  }
+
+  .culture-section .tooltip-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--map-lime);
+    box-shadow: 0 0 8px var(--map-lime);
+  }
+
+  /* =========================================
+     PETUNJUK PETA
+  ========================================= */
+  .culture-section .map-hint {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    margin-top: 10px;
+    padding: 9px 10px;
+
+    color: #56634b;
+    font-size: 12px;
+    line-height: 1.5;
+    text-align: center;
+  }
+
+  .culture-section .hint-dot {
+    flex: 0 0 9px;
+    width: 9px;
+    height: 9px;
+    background: #8eae12;
+    border-radius: 50%;
+    box-shadow: 0 0 0 4px rgb(142 174 18 / 15%);
+    animation: hintPulse 2s infinite ease-in-out;
+  }
+
+  @keyframes hintPulse {
+    0%, 100% {
+      box-shadow: 0 0 0 3px rgb(142 174 18 / 15%);
+      transform: scale(1);
+    }
+    50% {
+      box-shadow: 0 0 0 7px rgb(142 174 18 / 28%);
+      transform: scale(1.15);
+    }
+  }
+
+  /* =========================================
+     PANEL INFORMASI WILAYAH
+  ========================================= */
+  .culture-section .info-panel {
+    min-width: 0;
+    padding: 23px 22px;
+
+    background: #f6ffcf;
+    border: 1.5px solid #e1f59b;
+    border-radius: 14px;
+    box-shadow: 0 12px 32px rgb(0 0 0 / 16%);
+    overflow: hidden;
+  }
+
+  .culture-section .info-top {
+    margin-bottom: 14px;
+  }
+
+  .culture-section .info-label {
+    display: block;
+    margin-bottom: 6px;
+    color: #58703c;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.6px;
+  }
+
+  .culture-section .region-title-mask {
+    overflow: hidden;
+  }
+
+  .culture-section .info-panel #region-name {
+    margin: 0;
+    color: #172219;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(27px, 2.5vw, 36px);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.7px;
+  }
+
+  /* GAMBAR WILAYAH DENGAN MASKING */
+  .culture-section .region-media {
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    margin: 0 0 15px !important;
+    background: #dfecc0;
+  }
+
+  .culture-section .region-image {
+    display: block;
+    width: 100%;
+    height: 150px;
+    margin: 0;
+    object-fit: cover;
+    object-position: center;
+    background: #fff;
+    border-radius: 10px;
+    will-change: transform, clip-path;
+  }
+
+  /* DESKRIPSI */
+  .culture-section .region-description {
+    margin: 0;
+    color: #273126;
+    font-size: 12px;
+    line-height: 1.75;
+  }
+
+  .culture-section .info-divider {
+    width: 100%;
+    height: 1px;
+    margin: 17px 0;
+    background: rgb(75 101 35 / 20%);
+    transform-origin: left center;
+  }
+
+  .culture-section .info-panel .info-subtitle {
+    margin: 0 0 11px;
+    color: #202b1e;
+    font-size: 13px;
+    font-weight: 800;
+    line-height: 1.5;
+  }
+
+  /* DAFTAR BUDAYA */
+  .culture-section .culture-list {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    margin: 0;
+    padding-left: 20px;
+    color: #20291e;
+    font-size: 12px;
+    line-height: 1.5;
+    list-style-type: disc;
+  }
+
+  .culture-section .culture-list li {
+    padding-left: 1px;
+  }
+
+  .culture-section button:focus-visible {
+    outline: 3px solid rgb(255 145 77 / 50%);
+    outline-offset: 3px;
+  }
+
+  /* =========================================
+     RESPONSIVE PETA BUDAYA (LAPTOP KECIL, TABLET, HP)
+  ========================================= */
+  @media (max-width: 1100px) {
+    .culture-section {
+      padding: 48px 3.5% 54px;
+    }
+
+    .culture-section .culture-layout {
+      grid-template-columns: minmax(0, 1.6fr) minmax(260px, 1fr);
+      gap: 12px;
+    }
+
+    .culture-section .map-panel {
+      min-height: 380px;
+      padding: 18px 13px 12px;
+    }
+
+    .culture-section .info-panel {
+      padding: 20px 17px;
+    }
+
+    .culture-section .region-image {
+      height: 130px;
+    }
+  }
+
+  @media (max-width: 800px) {
+    .culture-section {
+      padding: 42px 24px 48px;
+    }
+
+    .culture-section .culture-layout {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .culture-section .section-heading {
+      min-height: 70px;
+      margin-bottom: 23px;
+    }
+
+    .culture-section .title-pill {
+      width: 91%;
+      min-height: 70px;
+      padding: 12px 22px;
+    }
+
+    .culture-section .title-pill h2 {
+      font-size: clamp(22px, 4vw, 33px);
+    }
+
+    .culture-section .title-accent {
+      width: 35%;
+    }
+
+    .culture-section .map-panel {
+      min-height: 320px;
+      padding: 20px 18px 12px;
+    }
+
+    .culture-section .indonesia-map {
+      max-height: 380px;
+    }
+
+    .culture-section .info-panel {
+      padding: 22px;
+    }
+
+    .culture-section .info-panel #region-name {
+      font-size: 31px;
+    }
+
+    .culture-section .region-image {
+      height: 185px;
+    }
+
+    .culture-section .cloud-top-left {
+      width: 220px;
+    }
+
+    .culture-section .cloud-bottom-left,
+    .culture-section .cloud-bottom-right {
+      width: 210px;
+    }
+
+    .culture-section .map-cursor-tooltip {
+      display: none;
+    }
+  }
+
+  @media (max-width: 520px) {
+    .culture-section {
+      padding: 34px 15px 40px;
+    }
+
+    .culture-section .section-heading {
+      min-height: 58px;
+      margin-bottom: 20px;
+    }
+
+    .culture-section .title-pill {
+      width: 94%;
+      min-height: 58px;
+      padding: 10px 15px;
+      border-width: 1.5px;
+    }
+
+    .culture-section .title-pill h2 {
+      font-size: clamp(17px, 5vw, 24px);
+      letter-spacing: -0.4px;
+    }
+
+    .culture-section .title-accent {
+      width: 32%;
+    }
+
+    .culture-section .map-panel {
+      min-height: 220px;
+      padding: 14px 8px 9px;
+      border-radius: 11px;
+    }
+
+    .culture-section .indonesia-map {
+      max-height: none;
+    }
+
+    .culture-section .map-hint {
+      gap: 7px;
+      margin-top: 7px;
+      padding: 7px 4px;
+      font-size: 10px;
+    }
+
+    .culture-section .info-panel {
+      padding: 19px 17px;
+      border-radius: 11px;
+    }
+
+    .culture-section .info-panel #region-name {
+      font-size: 28px;
+    }
+
+    .culture-section .region-image {
+      height: 155px;
+    }
+
+    .culture-section .region-description {
+      font-size: 12px;
+    }
+
+    .culture-section .cloud {
+      opacity: 0.35;
+    }
+
+    .culture-section .cloud-top-left {
+      top: 0;
+      left: -42px;
+      width: 150px;
+    }
+
+    .culture-section .cloud-bottom-left {
+      bottom: 0;
+      left: -32px;
+      width: 150px;
+    }
+
+    .culture-section .cloud-bottom-right {
+      right: -32px;
+      bottom: 0;
+      width: 150px;
+    }
+  }
+
+  @media (max-width: 380px) {
+    .culture-section {
+      padding-inline: 11px;
+    }
+
+    .culture-section .title-pill {
+      padding-inline: 12px;
+    }
+
+    .culture-section .title-pill h2 {
+      font-size: 17px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .culture-section .map-region,
+    .culture-section .hint-dot {
+      animation: none !important;
+      transition: none !important;
+    }
+  }
+</style>
+
+     
+<!-- Jejak Seni & Budaya Nusantara -->
+<section
+  id="jejak-seni"
+  aria-labelledby="jejak-seni-heading"
+  class="jejak-seni-section relative flex min-h-screen w-full select-none flex-col items-center justify-center overflow-hidden bg-[#181A19] px-0 py-10 md:py-14"
+>
+
+
+  <!-- Judul Section (Semantic H2) -->
+  <header
+    id="jejak-seni-header"
+    class="relative z-20 mx-auto mb-6 max-w-4xl space-y-2 px-4 text-center md:mb-10"
+  >
+    <h2
+      id="jejak-seni-heading"
+      class="text-3xl font-extrabold leading-tight tracking-tight text-[#355313] sm:text-5xl sm:leading-snug md:text-6xl lg:text-7xl"
+    >
+      Jejak Seni &amp;<br class="hidden sm:inline" />
+      Budaya Nusantara
+    </h2>
+  </header>
+
+  <!-- 3D Concave Carousel Stage (Menggunakan ID khusus agar tidak bentrok script lama) -->
+  <div
+    id="jejak-carousel-stage"
+    role="region"
+    aria-roledescription="carousel"
+    aria-label="Carousel Seni dan Budaya Nusantara"
+    class="jejak-carousel-stage relative z-20 flex h-[380px] sm:h-[440px] md:h-[500px] w-full items-center justify-center overflow-hidden"
+  >
+    <ul
+      id="jejak-carousel-track"
+      class="jejak-carousel-track relative flex h-full w-full items-center justify-center"
+    >
+      <!-- Card 1 -->
+      <li class="jejak-card">
+        <figure class="jejak-card__figure">
+          <img
+            class="jejak-card__image"
+            src="asset/card-1.png"
+            alt="Tari Tradisional Nusantara"
+            draggable="false"
+          />
+          <figcaption class="sr-only">Tari Tradisional Nusantara</figcaption>
+        </figure>
+      </li>
+
+      <!-- Card 2 -->
+      <li class="jejak-card">
+        <figure class="jejak-card__figure">
+          <img
+            class="jejak-card__image"
+            src="asset/card-2.png"
+            alt="Desa Adat Tradisional"
+            draggable="false"
+          />
+          <figcaption class="sr-only">Desa Adat Tradisional</figcaption>
+        </figure>
+      </li>
+
+      <!-- Card 3 -->
+      <li class="jejak-card">
+        <figure class="jejak-card__figure">
+          <img
+            class="jejak-card__image"
+            src="asset/card-3.png"
+            alt="Wayang Kulit Nusantara"
+            draggable="false"
+          />
+          <figcaption class="sr-only">Wayang Kulit Nusantara</figcaption>
+        </figure>
+      </li>
+
+      <!-- Card 4 -->
+      <li class="jejak-card">
+        <figure class="jejak-card__figure">
+          <img
+            class="jejak-card__image"
+            src="asset/wayang-card.png"
+            alt="Proses Membatik"
+            draggable="false"
+          />
+          <figcaption class="sr-only">Proses Membatik</figcaption>
+        </figure>
+      </li>
+
+      <!-- Card 5 -->
+      <li class="jejak-card">
+        <figure class="jejak-card__figure">
+          <img
+            class="jejak-card__image"
+            src="asset/card-5.png"
+            alt="Keris Pusaka Nusantara"
+            draggable="false"
+          />
+          <figcaption class="sr-only">Keris Pusaka Nusantara</figcaption>
+        </figure>
+      </li>
+
+      <!-- Card 6 -->
+      <li class="jejak-card">
+        <figure class="jejak-card__figure">
+          <img
+            class="jejak-card__image"
+            src="asset/card-6.png"
+            alt="Gamelan Jawa"
+            draggable="false"
+          />
+          <figcaption class="sr-only">Gamelan Jawa</figcaption>
+        </figure>
+      </li>
+
+      <!-- Card 7 -->
+      <li class="jejak-card">
+        <figure class="jejak-card__figure">
+          <img
+            class="jejak-card__image"
+            src="asset/card-7.png"
+            alt="Rumah Adat Nusantara"
+            draggable="false"
+          />
+          <figcaption class="sr-only">Rumah Adat Nusantara</figcaption>
+        </figure>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================= CSS KHUSUS JEJAK SENI (ANTI-GLITCH 3D CONCAVE) ================= -->
+<style>
+  .jejak-carousel-stage {
+    perspective: 1200px;
+  }
+
+  .jejak-carousel-track {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  .jejak-card {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 200px;
+    height: 290px;
+    margin-top: -145px;
+    margin-left: -100px;
+    will-change: transform, opacity;
+    cursor: pointer;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+
+  @media (min-width: 640px) {
+    .jejak-card {
+      width: 235px;
+      height: 340px;
+      margin-top: -170px;
+      margin-left: -117.5px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .jejak-card {
+      width: 265px;
+      height: 385px;
+      margin-top: -192.5px;
+      margin-left: -132.5px;
+    }
+  }
+
+  .jejak-card__figure {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    border-radius: 16px;
+    overflow: hidden;
+    background: #171a18;
+    box-shadow: 0 18px 36px -12px rgba(23, 26, 24, 0.32);
+  }
+
+  /* Aksen Pita Kaset Film saat Fase S-Curve */
+  .jejak-card__figure::before,
+  .jejak-card__figure::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 12px;
+    z-index: 3;
+    pointer-events: none;
+    opacity: var(--film-opacity, 0);
+    background-image: repeating-linear-gradient(
+      to bottom,
+      rgba(251, 254, 237, 0.8) 0px,
+      rgba(251, 254, 237, 0.8) 8px,
+      transparent 8px,
+      transparent 18px
+    );
+  }
+
+  .jejak-card__figure::before {
+    left: 5px;
+  }
+
+  .jejak-card__figure::after {
+    right: 5px;
+  }
+
+  .jejak-card__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    pointer-events: none;
+    user-select: none;
+  }
+</style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    if (typeof gsap === "undefined" || typeof ScrollTrigger === "undefined") {
+      return;
+    }
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    const section = document.getElementById("jejak-seni");
+    const track = document.getElementById("jejak-carousel-track");
+    if (!section || !track) return;
+
+    // Gandakan kartu agar barisannya panjang dan tidak pernah putus saat berputar
+    const baseCards = Array.from(track.querySelectorAll(".jejak-card"));
+    baseCards.forEach((card) => {
+      const clone = card.cloneNode(true);
+      clone.setAttribute("aria-hidden", "true");
+      track.appendChild(clone);
+    });
+
+    const cards = Array.from(track.querySelectorAll(".jejak-card"));
+    const totalCards = cards.length; // 14 kartu
+
+    const state = {
+      scrollProgress: 0, // Dikontrol oleh ScrollTrigger (0 -> 1)
+      offsetX: 0,
+      baseSpeed: 1.45, // Kecepatan carousel berjalan otomatis
+      speedMultiplier: 1,
+    };
+
+    // Melambat halus saat kursor diarahkan ke kartu
+    track.addEventListener("mouseenter", () => {
+      gsap.to(state, { speedMultiplier: 0.25, duration: 0.5, ease: "power2.out" });
+    });
+    track.addEventListener("mouseleave", () => {
+      gsap.to(state, { speedMultiplier: 1, duration: 0.5, ease: "power2.out" });
+    });
+
+    // Pinning Section: User scroll -> kartu meliuk huruf S -> merata jadi Concave Carousel
+    ScrollTrigger.create({
+      trigger: section,
+      start: "top top",
+      end: "+=160%",
+      pin: true,
+      scrub: 0.8,
+      anticipatePin: 1,
+      onUpdate: (self) => {
+        state.scrollProgress = self.progress;
+      },
+    });
+
+    function updateCarouselFrame() {
+      const vw = window.innerWidth;
+      const isMobile = vw < 640;
+      const isTablet = vw >= 640 && vw < 1024;
+
+      // Jarak antar kartu yang rapi (sedikit renggang mengikuti lengkungan)
+      const cardSpacing = isMobile ? 205 : isTablet ? 245 : 280;
+      const totalWidth = totalCards * cardSpacing;
+      const halfWidth = totalWidth / 2;
+
+      const p = state.scrollProgress;
+
+      // Fase 1 (0 -> 0.65): Kartu masuk membentuk huruf S
+      // Fase 2 (0.5 -> 1.0): Huruf S melurus menjadi Concave Carousel
+      const enterProgress = gsap.utils.clamp(0, 1, p / 0.6);
+      const concaveProgress = gsap.utils.clamp(0, 1, (p - 0.45) / 0.55);
+      const sWavePeak = Math.sin(p * Math.PI); // Bernilai 0 di awal, 1 di tengah, 0 di akhir
+
+      // Pergerakan jalan otomatis (tetap jalan terus secara smooth)
+      state.offsetX -= state.baseSpeed * state.speedMultiplier;
+
+      const filmSprocketOpacity = (1 - concaveProgress) * 0.7;
+
+      cards.forEach((card, index) => {
+        // Posisi horizontal бесконечный (infinite modulo loop)
+        let loopX =
+          ((index * cardSpacing + state.offsetX) % totalWidth + totalWidth) %
+            totalWidth -
+          halfWidth;
+
+        // Rasio posisi terhadap tengah layar (-1 = pinggir kiri, 0 = tengah, +1 = pinggir kanan)
+        const normX = loopX / (vw * 0.5);
+        const clampedNorm = gsap.utils.clamp(-1.5, 1.5, normX);
+        const absNorm = Math.abs(clampedNorm);
+
+        // =========================================================================
+        // 1. TARGET CONCAVE CAROUSEL (Persis Gambar Figma: Tengah Kecil & Cekung)
+        // =========================================================================
+        // Saat di tengah (absNorm = 0) -> scale 0.82 (mengecil menjorok ke dalam)
+        // Saat di pinggir kiri/kanan (absNorm = 1) -> scale 1.08 (membesar melengkung ke luar)
+        const targetScale = 0.82 + Math.pow(absNorm, 1.5) * 0.28;
+
+        // Rotasi Y 3D: Kartu kiri menghadap ke kanan (+28deg), kartu kanan menghadap ke kiri (-28deg)
+        const targetRotateY = -clampedNorm * (isMobile ? 22 : 30);
+
+        // =========================================================================
+        // 2. EFEK S-CURVE FILMSTRIP SAAT SCROLL PERTAMA KALI
+        // =========================================================================
+        const sPhase = clampedNorm * Math.PI * 1.2 + (1 - enterProgress) * 3.5;
+        const sWaveY = Math.sin(sPhase) * (isMobile ? 95 : 155) * sWavePeak;
+        const sWaveRotZ = Math.cos(sPhase) * 18 * sWavePeak;
+        const sWaveRotY = Math.sin(sPhase) * 35 * (1 - concaveProgress);
+
+        // Kartu meluncur masuk dari kanan saat awal scroll
+        const slideInX = (1 - enterProgress) * (vw * 0.65 + index * 35);
+
+        // =========================================================================
+        // 3. GABUNGKAN TRANSISI DENGAN AMAN (TANPA Z-CLIPPING)
+        // =========================================================================
+        const finalX = loopX + slideInX;
+        const finalY = sWaveY;
+        const finalRotY = gsap.utils.interpolate(
+          sWaveRotY,
+          targetRotateY,
+          concaveProgress
+        );
+        const finalRotZ = sWaveRotZ;
+        const finalScale = gsap.utils.interpolate(
+          0.78,
+          targetScale,
+          concaveProgress
+        );
+
+        // Sembunyikan kartu yang berada jauh di luar batas layar agar tidak bertumpuk
+        const isWithinScreen = Math.abs(finalX) < vw * 0.78;
+        const finalOpacity = isWithinScreen
+          ? gsap.utils.clamp(0, 1, enterProgress * 3)
+          : 0;
+
+        // Urutan tumpukan: kartu tengah paling dalam (z-index kecil), pinggir lebih depan
+        card.style.zIndex = String(Math.round(absNorm * 50) + 1);
+        card.style.setProperty("--film-opacity", filmSprocketOpacity.toFixed(2));
+
+        gsap.set(card, {
+          transformPerspective: 1200,
+          x: finalX,
+          y: finalY,
+          rotationY: finalRotY,
+          rotationZ: finalRotZ,
+          scale: finalScale,
+          opacity: finalOpacity,
+        });
+      });
+    }
+
+    gsap.ticker.add(updateCarouselFrame);
+  });
+</script>
+
+<!-- studio aksara -->
+
+     <section id="studio-aksara" class="relative isolation-auto w-full px-[4%] py-[54px] pb-[64px] overflow-hidden bg-[#202422] text-[#17232b] font-['Poppins',sans-serif] box-border [&_*]:box-border [&_*::before]:box-border [&_*::after]:box-border">
+  <div class="w-full max-w-[1420px] mx-auto">
+    <!-- Judul Studio Aksara -->
+    <header class="mb-[25px]">
+      <h2 class="m-0 mb-[10px] text-[#ff914d] text-[clamp(34px,4vw,58px)] font-extrabold leading-[1.15] tracking-[-1.3px] ">
+        Studio Aksara
+      </h2>
+
+      <p class="max-w-[800px] m-0 text-[#f2f0eb] text-[15px] leading-[1.75]">
+        Jelajahi keindahan aksara Nusantara. Ketik tulisanmu, kenali
+        karakternya, dan salin hasilnya.
+      </p>
+    </header>
+
+    <div class="grid grid-cols-1 lg:grid-cols-[minmax(0,1.65fr)_minmax(280px,1fr)] items-stretch gap-[14px] w-full max-[1100px]:grid-cols-[minmax(0,1.25fr)_minmax(260px,0.85fr)] max-[1100px]:gap-[12px] max-[800px]:grid-cols-1 max-[800px]:gap-[13px]">
+      <!-- PANEL INPUT DAN HASIL -->
+      <div class="generator-panel min-w-0 p-[24px] bg-[#fffdf6] border border-[#e9e4d7] rounded-[13px] shadow-[0_5px_20px_rgb(0_0_0_8%)] max-[1100px]:p-[19px] max-[800px]:p-[18px] max-[520px]:p-[15px] max-[520px]:rounded-[11px] max-[380px]:p-[13px]">
+        <!-- Pilihan aksara -->
+        <div class="script-tabs grid grid-cols-4 gap-[9px] mb-[24px] max-[1100px:grid-cols-2 max-[520px]:gap-[7px] max-[520px]:mb-[21px]" role="group" aria-label="Pilih aksara">
+          <button
+            type="button"
+            class="script-tab flex items-center justify-center min-w-0 min-h-[48px] px-[7px] py-[9px] border-[1.5px] border-[#ff914d] rounded-[10px] bg-[#fffdf8] text-[#252525] font-inherit text-[12px] font-semibold leading-[1.4] text-center cursor-pointer transition-[background-color,color,transform] duration-200 ease-in-out hover:bg-[#ff914d] hover:border-[#ff914d] hover:text-white hover:-translate-y-[1px] focus-visible:outline focus-visible:outline-3 focus-visible:outline-[#ff914d]/50 focus-visible:outline-offset-[3px] aria-pressed:true:bg-[#ff914d] aria-pressed:true:border-[#ff914d] aria-pressed:true:text-white active:bg-[#ff914d] active:border-[#ff914d] active:text-white"
+            data-script="jawa"
+            aria-pressed="true"
+          >
+            Aksara Jawa
+          </button>
+
+          <button
+            type="button"
+            class="script-tab flex items-center justify-center min-w-0 min-h-[48px] px-[7px] py-[9px] border-[1.5px] border-[#ff914d] rounded-[10px] bg-[#fffdf8] text-[#252525] font-inherit text-[12px] font-semibold leading-[1.4] text-center cursor-pointer transition-[background-color,color,transform] duration-200 ease-in-out hover:bg-[#ff914d] hover:border-[#ff914d] hover:text-white hover:-translate-y-[1px] focus-visible:outline focus-visible:outline-3 focus-visible:outline-[#ff914d]/50 focus-visible:outline-offset-[3px] aria-pressed:true:bg-[#ff914d] aria-pressed:true:border-[#ff914d] aria-pressed:true:text-white"
+            data-script="bali"
+            aria-pressed="false"
+          >
+            Aksara Bali
+          </button>
+
+          <button
+            type="button"
+            class="script-tab flex items-center justify-center min-w-0 min-h-[48px] px-[7px] py-[9px] border-[1.5px] border-[#ff914d] rounded-[10px] bg-[#fffdf8] text-[#252525] font-inherit text-[12px] font-semibold leading-[1.4] text-center cursor-pointer transition-[background-color,color,transform] duration-200 ease-in-out hover:bg-[#ff914d] hover:border-[#ff914d] hover:text-white hover:-translate-y-[1px] focus-visible:outline focus-visible:outline-3 focus-visible:outline-[#ff914d]/50 focus-visible:outline-offset-[3px] aria-pressed:true:bg-[#ff914d] aria-pressed:true:border-[#ff914d] aria-pressed:true:text-white"
+            data-script="sunda"
+            aria-pressed="false"
+          >
+            Aksara Sunda
+          </button>
+
+          <button
+            type="button"
+            class="script-tab flex items-center justify-center min-w-0 min-h-[48px] px-[7px] py-[9px] border-[1.5px] border-[#ff914d] rounded-[10px] bg-[#fffdf8] text-[#252525] font-inherit text-[12px] font-semibold leading-[1.4] text-center cursor-pointer transition-[background-color,color,transform] duration-200 ease-in-out hover:bg-[#ff914d] hover:border-[#ff914d] hover:text-white hover:-translate-y-[1px] focus-visible:outline focus-visible:outline-3 focus-visible:outline-[#ff914d]/50 focus-visible:outline-offset-[3px] aria-pressed:true:bg-[#ff914d] aria-pressed:true:border-[#ff914d] aria-pressed:true:text-white"
+            data-script="lontara"
+            aria-pressed="false"
+          >
+            Lontara Bugis
+          </button>
+        </div>
+
+        <!-- Input Latin -->
+        <label for="latin-input" class="field-label block m-0 mb-[8px] text-[#414b50] text-[12px] font-bold tracking-[0.4px]">
+          TULIS KATA DALAM HURUF LATIN
+        </label>
+
+        <textarea
+          id="latin-input"
+          class="block w-full min-h-[95px] px-[15px] py-[13px] resize-y border border-[#ffd0b5] rounded-[11px] outline-none bg-white text-[#202020] font-inherit text-[14px] leading-[1.7] placeholder:text-[#aaa] focus:border-[#ff914d] focus:ring-[3px] focus:ring-[#ff914d]/14 focus-visible:outline focus-visible:outline-3 focus-visible:outline-[#ff914d]/50 focus-visible:outline-offset-[3px] max-[520px]:min-h-[85px] max-[520px]:text-[13px]"
+          placeholder="Contoh: selamat datang..."
+          maxlength="500"
+          rows="3"
+          spellcheck="false"
+        ></textarea>
+
+        <!-- Judul hasil -->
+        <div class="result-heading flex items-center justify-between gap-[12px] mt-[22px]">
+          <label for="script-output" class="field-label block m-0 text-[#414b50] text-[12px] font-bold tracking-[0.4px]">
+            HASIL AKSARA
+          </label>
+
+          <span id="character-count" class="text-[#777] text-[12px]"> 0 karakter </span>
+        </div>
+
+        <!-- Kotak hasil -->
+        <div class="result-box w-full mt-[11px] overflow-hidden border border-[#ffc6a5] rounded-[12px] bg-white">
+          <div
+            id="script-output"
+            class="script-output block w-full min-h-[210px] p-[20px] [overflow-wrap:anywhere] whitespace-pre-wrap bg-white text-[#191919] font-['Noto_Sans_Javanese','Noto_Sans_Balinese','Noto_Sans_Sundanese','Poppins',sans-serif] text-[29px] leading-[1.8] max-[520px]:min-h-[175px] max-[520px]:p-[15px] max-[520px]:text-[23px] max-[380px]:min-h-[155px] max-[380px]:p-[12px] max-[380px]:text-[21px]"
+            aria-live="polite"
+            aria-atomic="true"
+          >
+            Hasil aksara akan muncul di sini.
+          </div>
+        </div>
+
+        <!-- Tombol salin di tengah -->
+        <div class="result-actions mt-[20px] flex justify-center w-full">
+          <button 
+            type="button" 
+            id="copy-button" 
+            class="mt-[4px] inline-flex items-center justify-center gap-[8px] min-h-[43px] px-[24px] py-[10px] border-[1.5px] border-[#ff914d] rounded-[10px] bg-[#fffdf8] text-[#242424] font-inherit text-[13px] font-semibold cursor-pointer transition-[background-color,color,transform] duration-200 ease-in-out hover:bg-[#ff914d] hover:text-white hover:-translate-y-[1px] focus-visible:outline focus-visible:outline-3 focus-visible:outline-[#ff914d]/50 focus-visible:outline-offset-[3px]"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              width="18"
+              height="18"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <rect x="8" y="8" width="12" height="12" rx="2"></rect>
+
+              <path
+                d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"
+              ></path>
+            </svg>
+
+            <span>Salin Aksara</span>
+          </button>
+        </div>
+
+        <!-- Catatan aksara -->
+        <div class="philology-note mt-[21px] px-[17px] py-[15px] border border-[#ffc6a5] rounded-[11px] bg-[#fffaf4]">
+          <strong class="block mb-[6px] text-[#26362d] text-[13px]">Catatan Aksara</strong>
+
+          <p id="script-note" class="m-0 text-[#536057] text-[12px] leading-[1.7]">
+            Pilih aksara untuk melihat informasi dan karakternya.
+          </p>
+        </div>
+
+        <p
+          id="status-message"
+          class="status-message min-h-[18px] mt-[9px] mb-0 text-[#46534c] text-[12px] leading-[1.6]"
+          aria-live="polite"
+        ></p>
+      </div>
+
+      <!-- PANEL DAFTAR KARAKTER -->
+      <aside class="character-panel overflow-hidden p-[24px] bg-[#fffdf6] border border-[#e9e4d7] rounded-[13px] shadow-[0_5px_20px_rgb(0_0_0_8%)] max-[1100px]:p-[19px] max-[800px]:p-[18px] max-[520px]:p-[15px] max-[520px]:rounded-[11px] max-[380px]:p-[13px]">
+        <h3 id="character-title" class="m-0 mb-[7px] text-[#152630] text-[20px] font-extrabold leading-[1.4]">Karakter Aksara Jawa</h3>
+
+        <p id="character-description" class="m-0 mb-[18px] text-[#536057] text-[12px] leading-[1.7]">
+          Pilih karakter untuk menyalin simbolnya.
+        </p>
+
+        <div id="character-grid" class="character-grid grid grid-cols-2 content-start gap-[10px] max-h-[570px] p-[2px_4px_8px_2px] overflow-y-auto [overscroll-behavior:contain] max-[800px]:max-h-none max-[520px]:gap-[8px]"></div>
+
+        <p class="character-hint mt-[14px] mb-0 text-[#777] text-[12px] leading-[1.6]">Pilih karakter untuk menyalinnya.</p>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- CSS Khusus Animasi & State Dinamis (Sesuai Permintaan) -->
+<style>
+  @keyframes aksaraGlow {
+    from {
+      text-shadow:
+        0 0 5px rgb(255 145 77 / 40%),
+        0 0 12px rgb(255 145 77 / 30%),
+        0 0 25px rgb(255 111 43 / 15%);
+    }
+    to {
+      text-shadow:
+        0 0 8px rgb(255 145 77 / 80%),
+        0 0 20px rgb(255 145 77 / 65%),
+        0 0 35px rgb(255 111 43 / 45%),
+        0 0 55px rgb(255 111 43 / 20%);
+    }
+  }
+
+  /* State kosong pada output */
+  #script-output.empty {
+    color: #aaa;
+    font-size: 14px;
+  }
+
+  /* Card Karakter (Dinamis di-generate JS) */
+  #character-grid .character-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 4px;
+    min-width: 0;
+    min-height: 112px;
+    padding: 12px;
+    border: 1.5px solid #ff914d;
+    border-radius: 12px;
+    background: #ffe2cd;
+    color: #18252d;
+    text-align: left;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  #character-grid .character-card:hover {
+    transform: translateY(-2px);
+    background: #ff914d;
+    color: #fff;
+    box-shadow: 0 5px 12px rgb(255 145 77 / 18%);
+  }
+
+  #character-grid .character-symbol {
+    display: block;
+    color: #151515;
+    font-family: "Noto Sans Javanese", "Noto Sans Balinese", "Noto Sans Sundanese", sans-serif;
+    font-size: 36px;
+    line-height: 1.35;
+  }
+
+  #character-grid .character-card:hover .character-symbol {
+    color: #fff;
+  }
+
+  #character-grid .character-name {
+    display: block;
+    color: inherit;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.4;
+  }
+
+  #character-grid .character-description {
+    display: block;
+    color: inherit;
+    font-size: 11px;
+    line-height: 1.5;
+  }
+
+  @media (max-width: 520px) {
+    #character-grid .character-card {
+      min-height: 100px;
+      padding: 10px;
+    }
+    #character-grid .character-symbol {
+      font-size: 31px;
+    }
+    #character-grid .character-name {
+      font-size: 14px;
+    }
+  }
+
+  @media (max-width: 380px) {
+    #character-grid .character-card {
+      min-height: 92px;
+      padding: 8px;
+    }
+    #character-grid .character-symbol {
+      font-size: 28px;
+    }
+    #character-grid .character-name {
+      font-size: 13px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation: none !important;
+      transition: none !important;
+    }
+  }
+</style>
+
+      <!-- Ruang Batik Nusantara (Grid 2 Kolom: Kiri Teks, Kanan Accordion) -->
+      <section
+        id="ruang-batik"
+        aria-labelledby="batik-title"
+        class="relative w-full bg-[#202422] py-20 px-6 sm:px-10 md:px-16 lg:px-20 text-white overflow-hidden"
+      >
+        <div class="max-w-7xl mx-auto">
+          <!-- Layout Grid: Kiri (Teks), Kanan (Accordion Cards) -->
+          <div
+            class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center"
+          >
+            <!-- KOLOM KIRI: Judul & Deskripsi (Span 4 Kolom) -->
+            <div class="lg:col-span-4 flex flex-col justify-center">
+              <h2
+                id="batik-title"
+                class="text-4xl lg:text-left sm:text-5xl font-extrabold text-[#FF4242] tracking-tight leading-tight mb-4"
+              >
+                Ruang Batik Nusantara
+              </h2>
+              <p
+                class="text-md sm:text-base text-[#F5E6E6] font-semibold leading-relaxed max-w-md"
+              >
+                Kenali ragam motif legendaris dan makna tersirat di balik setiap
+                lengkung karya kain kebanggaan bangsa.
+              </p>
+            </div>
+
+            <!-- KOLOM KANAN: Vertical Accordion Cards (Span 8 Kolom) -->
+            <div class="lg:col-span-8">
+              <div
+                class="batik-grid-accordion flex flex-row gap-3 md:gap-4 h-[480px] w-full"
+              >
+                <!-- Card 1 (Mega Mendung) -->
+                <article
+                  class="batik-g-card group relative rounded-2xl overflow-hidden cursor-pointer shadow-2xl"
+                >
+                  <figure class="absolute inset-0 w-full h-full m-0">
+                    <img
+                      src="asset/batik mega mendung.png"
+                      alt="Batik Mega Mendung"
+                      class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                    />
+                    <div
+                      class="absolute inset-0 bg-gradient-to-t from-black/95 via-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-out"
+                    ></div>
+                    <div
+                      class="absolute inset-0 bg-[#D2F280]/90 backdrop-blur-[2px] opacity-100 group-hover:opacity-0 transition-opacity duration-500 ease-out"
+                    ></div>
+                  </figure>
+
+                  <!-- Teks Vertikal saat Tertutup -->
+                  <div
+                    class="card-title-vertical absolute inset-0 flex items-center justify-center pointer-events-none transition-opacity duration-300 group-hover:opacity-0 z-10"
+                  >
+                    <span
+                      class="[writing-mode:vertical-rl] rotate-180 whitespace-nowrap font-bold text-sm md:text-base text-[#171A18] tracking-wider"
+                    >
+                      Batik Mega mendung
+                    </span>
+                  </div>
+
+                  <!-- Konten Detail saat Terbuka (Hover) -->
+                  <div
+                    class="card-content absolute bottom-0 left-0 right-0 p-6 md:p-8 z-20 opacity-0 translate-y-6 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 delay-75 ease-out pointer-events-none group-hover:pointer-events-auto"
+                  >
+                    <h3
+                      class="text-xl md:text-2xl font-bold mb-2 text-white leading-tight"
+                    >
+                      Batik Mega mendung
+                    </h3>
+                    <p
+                      class="text-xs sm:text-sm text-gray-200 leading-relaxed max-w-sm"
+                    >
+                      Lahir dari akulturasi Cirebon dan Tiongkok, motif Mega
+                      Mendung menggambarkan awan bergradasi yang melambangkan
+                      kesabaran. Meliuknya garis awan ini berpesan agar manusia
+                      selalu meredam amarah dan membawa kesejukan bagi
+                      sekitarnya, layaknya hujan penyejuk bumi.
+                    </p>
+                  </div>
+                </article>
+
+                <!-- Card 2 (Parang Rusak) -->
+                <article
+                  class="batik-g-card group relative rounded-2xl overflow-hidden cursor-pointer shadow-2xl"
+                >
+                  <figure class="absolute inset-0 w-full h-full m-0">
+                    <img
+                      src="asset/Batik parang rusak.png"
+                      alt="Batik Parang Rusak"
+                      class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                    />
+                    <div
+                      class="absolute inset-0 bg-gradient-to-t from-black/95 via-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-out"
+                    ></div>
+                    <div
+                      class="absolute inset-0 bg-[#D2F280]/90 backdrop-blur-[2px] opacity-100 group-hover:opacity-0 transition-opacity duration-500 ease-out"
+                    ></div>
+                  </figure>
+
+                  <div
+                    class="card-title-vertical absolute inset-0 flex items-center justify-center pointer-events-none transition-opacity duration-300 group-hover:opacity-0 z-10"
+                  >
+                    <span
+                      class="[writing-mode:vertical-rl] rotate-180 whitespace-nowrap font-bold text-sm md:text-base text-[#171A18] tracking-wider"
+                    >
+                      Batik Parang Rusak
+                    </span>
+                  </div>
+
+                  <div
+                    class="card-content absolute bottom-0 left-0 right-0 p-6 md:p-8 z-20 opacity-0 translate-y-6 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 delay-75 ease-out pointer-events-none group-hover:pointer-events-auto"
+                  >
+                    <h3
+                      class="text-xl md:text-2xl font-bold mb-2 text-white leading-tight"
+                    >
+                      Batik Parang Rusak
+                    </h3>
+                    <p
+                      class="text-xs sm:text-sm text-gray-300 leading-relaxed max-w-sm"
+                    >
+                      Salah satu motif tertua di Nusantara yang terinspirasi
+                      dari ombak laut yang tak pernah berhenti mengikis karang.
+                      Garis-garis geometris diagonalnya melambangkan semangat
+                      pantang menyerah, ketangkasan, serta perjuangan manusia
+                      dalam melawan hawa nafsu.
+                    </p>
+                  </div>
+                </article>
+
+                <!-- Card 3 (Tujuh Rupa) -->
+                <article
+                  class="batik-g-card group relative rounded-2xl overflow-hidden cursor-pointer shadow-2xl"
+                >
+                  <figure class="absolute inset-0 w-full h-full m-0">
+                    <img
+                      src="asset/Batik tujuh rupa.png"
+                      alt="Batik Tujuh Rupa"
+                      class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                    />
+                    <div
+                      class="absolute inset-0 bg-gradient-to-t from-black/95 via-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-out"
+                    ></div>
+                    <div
+                      class="absolute inset-0 bg-[#D2F280]/90 backdrop-blur-[2px] opacity-100 group-hover:opacity-0 transition-opacity duration-500 ease-out"
+                    ></div>
+                  </figure>
+
+                  <div
+                    class="card-title-vertical absolute inset-0 flex items-center justify-center pointer-events-none transition-opacity duration-300 group-hover:opacity-0 z-10"
+                  >
+                    <span
+                      class="[writing-mode:vertical-rl] rotate-180 whitespace-nowrap font-bold text-sm md:text-base text-[#171A18] tracking-wider"
+                    >
+                      Batik Tujuh Rupa
+                    </span>
+                  </div>
+
+                  <div
+                    class="card-content absolute bottom-0 left-0 right-0 p-6 md:p-8 z-20 opacity-0 translate-y-6 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 delay-75 ease-out pointer-events-none group-hover:pointer-events-auto"
+                  >
+                    <h3
+                      class="text-xl md:text-2xl font-bold mb-2 text-white leading-tight"
+                    >
+                      Batik Tujuh Rupa
+                    </h3>
+                    <p
+                      class="text-xs sm:text-sm text-gray-300 leading-relaxed max-w-sm"
+                    >
+                      Dipengaruhi oleh budaya Tionghoa dan pedagang pesisir,
+                      batik ini kaya akan warna cerah dengan ornamen tumbuhan
+                      dan hewan. Ragam hiasnya yang luwes mencerminkan
+                      keharmonisan hubungan manusia dengan alam serta
+                      keterbukaan masyarakat pesisir terhadap budaya luar.
+                    </p>
+                  </div>
+                </article>
+
+                <!-- Card 4 (Besurek) -->
+                <article
+                  class="batik-g-card group relative rounded-2xl overflow-hidden cursor-pointer shadow-2xl"
+                >
+                  <figure class="absolute inset-0 w-full h-full m-0">
+                    <img
+                      src="asset/Batik Besurek.png"
+                      alt="Batik Besurek"
+                      class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                    />
+                    <div
+                      class="absolute inset-0 bg-gradient-to-t from-black/95 via-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-out"
+                    ></div>
+                    <div
+                      class="absolute inset-0 bg-[#D2F280]/90 backdrop-blur-[2px] opacity-100 group-hover:opacity-0 transition-opacity duration-500 ease-out"
+                    ></div>
+                  </figure>
+
+                  <div
+                    class="card-title-vertical absolute inset-0 flex items-center justify-center pointer-events-none transition-opacity duration-300 group-hover:opacity-0 z-10"
+                  >
+                    <span
+                      class="[writing-mode:vertical-rl] rotate-180 whitespace-nowrap font-bold text-sm md:text-base text-[#171A18] tracking-wider"
+                    >
+                      Batik Besurek
+                    </span>
+                  </div>
+
+                  <div
+                    class="card-content absolute bottom-0 left-0 right-0 p-6 md:p-8 z-20 opacity-0 translate-y-6 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 delay-75 ease-out pointer-events-none group-hover:pointer-events-auto"
+                  >
+                    <h3
+                      class="text-xl md:text-2xl font-bold mb-2 text-white leading-tight"
+                    >
+                      Batik Besurek
+                    </h3>
+                    <p
+                      class="text-xs sm:text-sm text-gray-300 leading-relaxed max-w-sm"
+                    >
+                      Kata Besurek berarti "bersurat" atau memiliki tulisan.
+                      Batik khas Bengkulu ini memadukan keindahan seni kaligrafi
+                      Arab dengan simbol alam lokal seperti bunga Rafflesia
+                      Arnoldii, menciptakan helai kain bernilai spiritual dan
+                      estetis yang tinggi.
+                    </p>
+                  </div>
+                </article>
+
+                <!-- Card 5 (Sasirangan) -->
+                <article
+                  class="batik-g-card group relative rounded-2xl overflow-hidden cursor-pointer shadow-2xl"
+                >
+                  <figure class="absolute inset-0 w-full h-full m-0">
+                    <img
+                      src="asset/Batik sasirangan.png"
+                      alt="Batik Sasirangan"
+                      class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                    />
+                    <div
+                      class="absolute inset-0 bg-gradient-to-t from-black/95 via-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-out"
+                    ></div>
+                    <div
+                      class="absolute inset-0 bg-[#D2F280]/90 backdrop-blur-[2px] opacity-100 group-hover:opacity-0 transition-opacity duration-500 ease-out"
+                    ></div>
+                  </figure>
+
+                  <div
+                    class="card-title-vertical absolute inset-0 flex items-center justify-center pointer-events-none transition-opacity duration-300 group-hover:opacity-0 z-10"
+                  >
+                    <span
+                      class="[writing-mode:vertical-rl] rotate-180 whitespace-nowrap font-bold text-sm md:text-base text-[#171A18] tracking-wider"
+                    >
+                      Batik Sasirangan
+                    </span>
+                  </div>
+
+                  <div
+                    class="card-content absolute bottom-0 left-0 right-0 p-6 md:p-8 z-20 opacity-0 translate-y-6 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 delay-75 ease-out pointer-events-none group-hover:pointer-events-auto"
+                  >
+                    <h3
+                      class="text-xl md:text-2xl font-bold mb-2 text-white leading-tight"
+                    >
+                      Batik Sasirangan
+                    </h3>
+                    <p
+                      class="text-xs sm:text-sm text-gray-300 leading-relaxed max-w-sm"
+                    >
+                      Dibuat dengan teknik jelujur dan diikat sebelum dicelup
+                      pewarna alami, kain khas suku Banjar ini dahulu digunakan
+                      sebagai kain penyembuh (pengobatan) serta simbol
+                      penghormatan spiritual. Motif geometrisnya melambangkan
+                      kedekatan masyarakat dengan alam dan leluhur.
+                    </p>
+                  </div>
+                </article>
+
+                <!-- Card 6 (Papua) -->
+                <article
+                  class="batik-g-card group relative rounded-2xl overflow-hidden cursor-pointer shadow-2xl"
+                >
+                  <figure class="absolute inset-0 w-full h-full m-0">
+                    <img
+                      src="asset/Batik Papua.png"
+                      alt="Batik Papua"
+                      class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                    />
+                    <div
+                      class="absolute inset-0 bg-gradient-to-t from-black/95 via-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-out"
+                    ></div>
+                    <div
+                      class="absolute inset-0 bg-[#D2F280]/90 backdrop-blur-[2px] opacity-100 group-hover:opacity-0 transition-opacity duration-500 ease-out"
+                    ></div>
+                  </figure>
+
+                  <div
+                    class="card-title-vertical absolute inset-0 flex items-center justify-center pointer-events-none transition-opacity duration-300 group-hover:opacity-0 z-10"
+                  >
+                    <span
+                      class="[writing-mode:vertical-rl] rotate-180 whitespace-nowrap font-bold text-sm md:text-base text-[#171A18] tracking-wider"
+                    >
+                      Batik Papua
+                    </span>
+                  </div>
+
+                  <div
+                    class="card-content absolute bottom-0 left-0 right-0 p-6 md:p-8 z-20 opacity-0 translate-y-6 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 delay-75 ease-out pointer-events-none group-hover:pointer-events-auto"
+                  >
+                    <h3
+                      class="text-xl md:text-2xl font-bold mb-2 text-white leading-tight"
+                    >
+                      Batik Papua
+                    </h3>
+                    <p
+                      class="text-xs sm:text-sm text-gray-300 leading-relaxed max-w-sm"
+                    >
+                      Mengangkat kekayaan alam dan budaya pulau Cendrawasih,
+                      batik ini didominasi ornamen Burung Cendrawasih, Tifa,
+                      serta ukiran khas suku Asmat. Warna-warnanya yang tegas
+                      dan hangat menggambarkan kekuatan, kebebasan, serta
+                      kebanggaan masyarakat Papua.
+                    </p>
+                  </div>
+                </article>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CSS Khusus Section Ruang Batik Nusantara (Grid & Horizontal Accordion + Responsif) -->
+      <style>
+        .batik-horizontal-accordion .batik-h-card {
+          height: 90px;
+          transition: height 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .batik-horizontal-accordion .batik-h-card:hover {
+          height: 380px;
+        }
+
+        .batik-grid-accordion .batik-g-card {
+          flex: 1;
+          /* Menggunakan cubic-bezier kustom untuk efek "spring/inertia" yang mulus */
+          transition:
+            flex 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+            transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+          will-change: flex;
+        }
+
+        .batik-grid-accordion .batik-g-card:hover {
+          flex: 4;
+        }
+
+        /* Memastikan transisi layout kontainer induk stabil */
+        .batik-grid-accordion {
+          will-change: auto;
+        }
+
+        /* Responsif Mobile & Tablet: Berubah jadi menumpuk ke bawah dengan transisi smooth */
+        @media (max-width: 1023px) {
+          .batik-grid-accordion {
+            flex-direction: column;
+            height: auto !important;
+          }
+          .batik-grid-accordion .batik-g-card {
+            height: 90px;
+            flex: unset !important;
+            transition: height 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+          }
+          .batik-grid-accordion .batik-g-card:hover {
+            height: 360px;
+          }
+          .batik-grid-accordion .card-title-vertical span {
+            writing-mode: horizontal-tb !important;
+            transform: none !important;
+          }
+        }
+      </style>
+
+      <!--
+  Prasyarat (sudah ada di project kamu, cukup pastikan):
+  1. Tailwind CSS aktif.
+  2. Font Poppins dimuat, mis. di <head>:
+     <link rel="preconnect" href="https://fonts.googleapis.com">
+     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
+  3. Ganti path gambar `assets/images/...` dengan aset kamu.
+-->
+
+      <section
+        id="budaya-nusantara"
+        class="stack-track relative h-[400vh] bg-neutral-900 font-['Poppins',sans-serif] motion-reduce:h-auto"
+        aria-labelledby="wayang-title"
+        data-stack-track
+      >
+        <div
+          class="sticky top-0 flex h-screen items-end justify-center px-4 pb-[6vh] motion-reduce:static motion-reduce:h-auto motion-reduce:py-8"
+        >
+          <ol
+            class="relative h-[74vh] min-h-[28rem] w-full max-w-5xl list-none [perspective:1600px] [perspective-origin:50%_0%] motion-reduce:flex motion-reduce:h-auto motion-reduce:flex-col motion-reduce:gap-6"
+          >
+            <!-- Kartu 1: Wayang -->
+            <li
+              class="stack-card absolute inset-0 motion-reduce:static"
+              data-stack-card
+            >
+              <article
+                class="flex h-full flex-col overflow-hidden rounded-3xl bg-[#fdffee] p-6 shadow-2xl motion-reduce:min-h-[30rem] md:p-12"
+              >
+                <h2
+                  id="wayang-title"
+                  class="stack-card__title max-w-xl text-4xl font-bold leading-tight text-[#a3ec47] [--glow:rgb(163_236_71/0.45)] md:text-5xl"
+                >
+                  Lakon Bayang &amp; Karakter Wayang Nusantara
+                </h2>
+                <p
+                  class="mt-4 max-w-2xl text-lg leading-relaxed text-[#3f8f3a] md:text-base"
+                >
+                  Setiap karakter wayang membawakan seni peran, moralitas, dan
+                  cermin diri manusia. Dari kebijaksanaan Puntadewa, ketegasan
+                  Bima, hingga kejenakaan para Punokawan yang luwes membaca
+                  zaman wayang bukan sekadar seni pertunjukan bayangan,
+                  melainkan media bertutur petuah, tradisi, dan estetika lokal
+                  yang tetap relevan bagi ruang modern.
+                </p>
+                <figure
+                  class="-mb-6 mt-auto ml-auto flex items-end gap-3 md:-mb-12"
+                >
+                  <img
+                    src="asset/wayang 1.png"
+                    alt="Wayang kulit tokoh Punokawan"
+                    class="h-36 w-auto object-contain md:h-56"
+                    loading="lazy"
+                  />
+                  <img
+                    src="asset/wayang 2.png"
+                    alt="Wayang golek berwarna dengan mahkota"
+                    class="h-40 w-auto object-contain md:h-64"
+                    loading="lazy"
+                  />
+                  <img
+                    src="asset/wayang 3.png"
+                    alt="Wayang kulit Bima"
+                    class="h-40 w-auto object-contain md:h-64"
+                    loading="lazy"
+                  />
+                </figure>
+              </article>
+            </li>
+
+            <!-- Kartu 2: Rumah adat -->
+            <li
+              class="stack-card absolute inset-0 motion-reduce:static"
+              data-stack-card
+            >
+              <article
+                class="flex h-full flex-col overflow-hidden rounded-3xl bg-[#f4ffff] p-6 shadow-2xl motion-reduce:min-h-[30rem] md:p-12"
+              >
+                <h2
+                  class="stack-card__title max-w-xl text-4xl font-bold leading-tight text-[#5de3b4] [--glow:rgb(93_227_180/0.45)] md:text-5xl"
+                >
+                  Arsitektur Tapak &amp; Karakter Rumah Adat
+                </h2>
+                <p
+                  class="mt-4 max-w-2xl text-sm leading-relaxed text-[#2f6e5d] md:text-base"
+                >
+                  Arsitektur Nusantara bukan sekadar susunan kayu dan atap
+                  megah, tapi respons bijak leluhur terhadap iklim dan alamnya.
+                  Dari konstruksi panggung Rumah Gadang Sumatra Barat yang tahan
+                  gempa, kerumitan ukiran Rumah Tongkonan Toraja, hingga
+                  sejuknya Rumah Lamin khas Dayak setiap bangunan menyimpan
+                  cerita tentang gotong royong, tata nilai, dan keharmonisan
+                  hidup bersama alam.
+                </p>
+                <ul
+                  class="mt-auto grid list-none grid-cols-3 gap-3 md:grid-cols-6"
+                >
+                  <li>
+                    <img
+                      src="asset/Rumah gadang.png"
+                      alt="Rumah Gadang, Sumatra Barat"
+                      class="aspect-[4/3] w-full rounded-lg object-cover"
+                      loading="lazy"
+                    />
+                  </li>
+                  <li>
+                    <img
+                      src="asset/Rumah joglo.png"
+                      alt="Rumah Joglo, Jawa"
+                      class="aspect-[4/3] w-full rounded-lg object-cover"
+                      loading="lazy"
+                    />
+                  </li>
+                  <li>
+                    <img
+                      src="asset/Rumah Tongkonan.png"
+                      alt="Rumah Tongkonan, Toraja"
+                      class="aspect-[4/3] w-full rounded-lg object-cover"
+                      loading="lazy"
+                    />
+                  </li>
+                  <li>
+                    <img
+                      src="asset/Rumah lamin.png"
+                      alt="Rumah Lamin, Kalimantan Timur"
+                      class="aspect-[4/3] w-full rounded-lg object-cover"
+                      loading="lazy"
+                    />
+                  </li>
+                  <li>
+                    <img
+                      src="asset/Rumah honai.png"
+                      alt="Honai, Papua"
+                      class="aspect-[4/3] w-full rounded-lg object-cover"
+                      loading="lazy"
+                    />
+                  </li>
+                  <li>
+                    <img
+                      src="asset/Rumah adat beratap.png"
+                      alt="Rumah adat beratap ijuk"
+                      class="aspect-[4/3] w-full rounded-lg object-cover"
+                      loading="lazy"
+                    />
+                  </li>
+                </ul>
+              </article>
+            </li>
+
+            <!-- Kartu 3: Keris -->
+       
+          <!-- Kartu 3: Keris -->
+            <li
+              class="stack-card absolute inset-0 motion-reduce:static"
+              data-stack-card
+            >
+              <article
+                class="relative flex h-full flex-col lg:flex-row overflow-hidden rounded-3xl bg-[#f7f4ff] p-6 shadow-2xl motion-reduce:min-h-[30rem] md:p-12 items-center justify-between"
+              >
+                <!-- KOTAK KIRI: Judul & Teks -->
+                <div class="flex flex-col w-full lg:max-w-[52%] z-10">
+                  <h2
+                    class="stack-card__title text-3xl font-bold leading-tight text-[#6b34f0] [--glow:rgb(107_52_240/0.4)] md:text-5xl"
+                  >
+                    Lekuk Besi &amp; Jiwa Keris Nusantara
+                  </h2>
+                  <p
+                    class="mt-4 text-sm leading-relaxed text-[#4a2a9a] md:text-base"
+                  >
+                    Bukan sekadar senjata tajam, keris adalah mahakarya seni
+                    tempa yang menyatukan besi, baja, dan batu meteorit menjadi
+                    simfoni visual yang memikat. Dari lekuk luk yang anggun,
+                    pendar lapisan pamor yang membius, hingga ukiran hulu
+                    pegangan yang detail—setiap keris menyimpan jejak spiritual,
+                    status sosial, serta doa leluhur yang ditempa berhari-hari
+                    dalam ketenangan jiwa.
+                  </p>
+                </div>
+
+                <!-- KOTAK KANAN: 3 Gambar Keris Melayang (Terbang) di Ruang Kosong -->
+                <figure
+                  class="hidden lg:block absolute right-8 top-0 bottom-0 w-[42%]"
+                >
+                  <!-- Keris 1 (Atas Kanan - Melayang Cepat) -->
+                  <img
+                    src="asset/Keris-1.png"
+                    alt="Keris luk tujuh dengan hulu emas"
+                    class="absolute right-32 top-8 h-64 w-auto object-contain drop-shadow-xl rotate-[12deg] animate-[float_4s_ease-in-out_infinite]"
+                    loading="lazy"
+                  />
+                  <!-- Keris 2 (Kanan Tengah - Melayang Lambat) -->
+                  <img
+                    src="asset/keris-2.png"
+                    alt="Keris lurus dengan pamor"
+                    class="absolute right-4 top-16 h-56 w-auto object-contain drop-shadow-xl rotate-[25deg] animate-[float_5s_ease-in-out_infinite_1s]"
+                    loading="lazy"
+                  />
+                  <!-- Keris 3 (Bawah - Melayang Variasi) -->
+                  <img
+                    src="asset/keris-3.png"
+                    alt="Keris dengan sarung kayu"
+                    class="absolute right-16 bottom-6 h-52 w-auto object-contain drop-shadow-2xl rotate-[-22deg] animate-[float_4.5s_ease-in-out_infinite_0.5s]"
+                    loading="lazy"
+                  />
+                </figure>
+
+                <!-- Tampilan Mobile/Tablet -->
+                <figure
+                  class="flex lg:hidden items-center justify-center gap-2 mt-6 z-10"
+                >
+                  <img
+                    src="asset/Keris-1.png"
+                    alt="Keris luk tujuh dengan hulu emas"
+                    class="h-32 w-auto object-contain drop-shadow-lg animate-[float_4s_ease-in-out_infinite]"
+                    loading="lazy"
+                  />
+                  <img
+                    src="asset/keris-2.png"
+                    alt="Keris lurus dengan pamor"
+                    class="h-30 w-auto object-contain drop-shadow-lg animate-[float_5s_ease-in-out_infinite_1s]"
+                    loading="lazy"
+                  />
+                  <img
+                    src="asset/keris-3.png"
+                    alt="Keris dengan sarung kayu"
+                    class="h-44 w-auto object-contain drop-shadow-xl animate-[float_4.5s_ease-in-out_infinite_0.5s]"
+                    loading="lazy"
+                  />
+                </figure>
+              </article>
+            </li>
+
+            <!-- Tambahan CSS Keyframes untuk Animasi Terbang/Melayang -->
+            <style>
+              @keyframes float {
+                0%, 100% {
+                  transform: translateY(0px) rotate(var(--tw-rotate, 0deg));
+                }
+                50% {
+                  transform: translateY(-12px) rotate(var(--tw-rotate, 0deg));
+                }
+              }
+            </style>
+        
+
+            <!-- Tambahan CSS Keyframes untuk Animasi Terbang/Melayang -->
+            <style>
+              @keyframes float {
+                0%, 100% {
+                  transform: translateY(0px) rotate(var(--tw-rotate, 0deg));
+                }
+                50% {
+                  transform: translateY(-12px) rotate(var(--tw-rotate, 0deg));
+                }
+              }
+            </style>
+        </div>
+      </section>
+
+      <style>
+        .stack-card {
+          transform-origin: 50% 100%;
+          will-change: transform;
+        }
+
+        .stack-card__title {
+          text-shadow: 0 0.06em 0.35em var(--glow);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .stack-card {
+            transform: none !important;
+            will-change: auto;
+          }
+        }
+      </style>
+      <!-- 
+      <script>
+        (() => {
+          const track = document.querySelector("[data-stack-track]");
+          if (!track) return;
+
+          const prefersReducedMotion = window.matchMedia(
+            "(prefers-reduced-motion: reduce)",
+          ).matches;
+          if (prefersReducedMotion) return;
+
+          const cards = Array.from(track.querySelectorAll("[data-stack-card]"));
+          if (cards.length < 2) return;
+
+          // Parameter animasi
+          const OPEN_ANGLE_DEG = 88; // sudut akhir saat "pintu" terbuka hingga menipis jadi strip
+          const HOLD_RATIO = 0.1; // jeda kartu diam sebelum mulai bergerak
+          const LIFT_RATIO = 0.35; // fase 1: kartu naik cepat sampai tepi bawahnya sejajar tepi atas stage
+          const LIFT_DISTANCE = 100; // jarak naik fase 1 (% tinggi kartu) -> tidak menutupi kartu berikutnya
+          const EXIT_DISTANCE = 45; // fase akhir: strip tipis naik keluar layar (% tinggi kartu)
+          const EXIT_START = 0.8; // progres saat strip mulai keluar layar
+          const PEEK_OFFSET_PX = 14; // tinggi "intipan" kartu di belakang
+          const PEEK_SCALE_STEP = 0.05; // pengecilan per lapis
+          const MAX_VISIBLE_DEPTH = 2;
+
+          const clamp = (value, min, max) =>
+            Math.min(Math.max(value, min), max);
+          const easeOutCubic = (t) => 1 - (1 - t) ** 3;
+          const easeInCubic = (t) => t ** 3;
+          const easeInOutCubic = (t) =>
+            t < 0.5 ? 4 * t ** 3 : 1 - (-2 * t + 2) ** 3 / 2;
+
+          /** Progres scroll section (0–1), dikonversi ke satuan "kartu". */
+          const getCardProgress = () => {
+            const scrollable = track.offsetHeight - window.innerHeight;
+            if (scrollable <= 0) return 0;
+            const progress = clamp(
+              -track.getBoundingClientRect().top / scrollable,
+              0,
+              1,
+            );
+            return progress * (cards.length - 1);
+          };
+
+          /** Progres animasi satu kartu (0–1) setelah dikurangi jeda awal. */
+          const getExitProgress = (fraction) =>
+            clamp((fraction - HOLD_RATIO) / (1 - HOLD_RATIO), 0, 1);
+
+          /**
+           * Kartu depan: naik datar -> membuka tegak dari engsel bawah (3D) -> menipis jadi strip lalu keluar.
+           * Transform-origin kartu ada di tepi bawah, sehingga rotateX membuat sisi atas menjauh.
+           */
+          const getExitTransform = (t) => {
+            const lift =
+              easeOutCubic(clamp(t / LIFT_RATIO, 0, 1)) * LIFT_DISTANCE;
+            const exit =
+              easeInCubic(clamp((t - EXIT_START) / (1 - EXIT_START), 0, 1)) *
+              EXIT_DISTANCE;
+            const angle =
+              easeInOutCubic(clamp((t - 0.05) / 0.8, 0, 1)) * OPEN_ANGLE_DEG;
+            return `translate3d(0, ${-(lift + exit)}%, 0) rotateX(${angle}deg)`;
+          };
+
+          /** Kartu di belakang: sedikit lebih kecil dan turun, sehingga tepi bawahnya mengintip. */
+          const getQueuedTransform = (depth) => {
+            const clamped = clamp(depth, 0, MAX_VISIBLE_DEPTH);
+            return `translate3d(0, ${clamped * PEEK_OFFSET_PX}px, 0) scale(${1 - clamped * PEEK_SCALE_STEP})`;
+          };
+
+          const render = () => {
+            const rawProgress = getCardProgress();
+            const activeIndex = Math.min(
+              Math.floor(rawProgress),
+              cards.length - 1,
+            );
+            const exitProgress = getExitProgress(rawProgress - activeIndex);
+            const effectiveProgress = activeIndex + exitProgress;
+
+            cards.forEach((card, index) => {
+              const isExiting =
+                index === activeIndex &&
+                exitProgress > 0 &&
+                index < cards.length - 1;
+              const isGone = index < activeIndex;
+
+              if (isGone) {
+                card.style.transform = getExitTransform(1);
+                card.style.opacity = "0";
+              } else if (isExiting) {
+                card.style.transform = getExitTransform(exitProgress);
+                card.style.opacity =
+                  exitProgress > 0.95 ? String((1 - exitProgress) / 0.05) : "1";
+              } else {
+                card.style.transform = getQueuedTransform(
+                  index - effectiveProgress,
+                );
+                card.style.opacity = "1";
+              }
+
+              card.style.zIndex = String(cards.length - index);
+              card.style.pointerEvents = isGone || isExiting ? "none" : "";
+            });
+          };
+
+          let isTicking = false;
+          const requestRender = () => {
+            if (isTicking) return;
+            isTicking = true;
+            requestAnimationFrame(() => {
+              render();
+              isTicking = false;
+            });
+          };
+
+          window.addEventListener("scroll", requestRender, { passive: true });
+          window.addEventListener("resize", requestRender);
+          render();
+        })();
+      </script> -->
+
+      <!-- Footer Section dengan Efek Glassmorphism pada Teks Kultara.id -->
+      <!-- Footer Section -->
+      <footer
+        id="site-footer"
+        class="relative w-full bg-[#111311] text-white pt-24 pb-12 px-6 sm:px-10 md:px-16 lg:px-24 overflow-hidden opacity-0 translate-y-10 transition-all duration-1000 ease-out"
+      >
+        <div class="absolute inset-0 pointer-events-none overflow-hidden -z-10">
+          <!-- Ellipse 11: Glow Utama Hijau Terang di Tengah (Paling Bawah) -->
+          <div
+            class="absolute -bottom-24 left-1/2 -translate-x-1/2 w-[580px] h-[400px] bg-[#CFFF7B] rounded-full blur-[140px] opacity-25"
+          ></div>
+
+          <!-- Ellipse 12: Inner Soft Glow Kuning-Hijau -->
+          <div
+            class="absolute -bottom-10 left-[48%] -translate-x-1/2 w-[420px] h-[300px] bg-[#B5E052] rounded-full blur-[110px] opacity-35"
+          ></div>
+
+          <!-- Ellipse 13: Ambient Light Sisi Kiri -->
+          <div
+            class="absolute -bottom-16 left-[45%] w-[380px] h-[280px] bg-[#8CAE59] rounded-full blur-[120px] opacity-20"
+          ></div>
+
+          <!-- Ellipse 14: Ambient Light Sisi Kanan -->
+          <div
+            class="absolute -bottom-16 right-[35%] w-[380px] h-[280px] bg-[#607C3C] rounded-full blur-[80px] opacity-10"
+          ></div>
+
+          <!-- Ellipse 15/16: Core Bright Highlight di Belakang Teks Kultara.id -->
+          <div
+            class="absolute bottom-6 left-1/2 -translate-x-1/2 w-[280px] h-[180px] bg-[#E5FF9E] rounded-full blur-[80px] opacity-40"
+          ></div>
+        </div>
+
+        <div
+          class="max-w-7xl mx-auto flex flex-col justify-between min-h-[360px]"
+        >
+          <!-- Bagian Atas / Navigasi & Kontak -->
+          <div
+            class="grid grid-cols-1 md:grid-cols-2 gap-12 justify-between items-start z-10"
+          >
+            <!-- Navigasi Menu Kiri -->
+            <nav aria-label="Footer Navigation">
+              <ul
+                class="space-y-3 text-sm md:text-base font-medium text-gray-300"
+              >
+                <li>
+                  <a
+                    href="#home"
+                    class="hover:text-white transition-colors duration-200"
+                    >Home</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#peta-budaya"
+                    class="hover:text-white transition-colors duration-200"
+                    >Peta Budaya</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#studio-aksara"
+                    class="hover:text-white transition-colors duration-200"
+                    >Studio Aksara</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#studio-bunyi"
+                    class="hover:text-white transition-colors duration-200"
+                    >Studio Bunyi</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#lorem-ipsum"
+                    class="hover:text-white transition-colors duration-200"
+                    >Lorem ipsum</a
+                  >
+                </li>
+              </ul>
+            </nav>
+
+            <!-- Informasi Kontak Kanan -->
+            <div
+              class="flex flex-col items-start md:items-end text-left md:text-right space-y-2 text-sm md:text-base text-gray-300"
+            >
+              <p>
+                Email:
+                <a
+                  href="mailto:halo@kultara.id"
+                  class="text-white hover:underline"
+                  >halo@kultara.id</a
+                >
+              </p>
+              <p>
+                <a
+                  href="tel:+6281224648652"
+                  class="hover:text-white transition-colors"
+                  >+62 812-2464-8652</a
+                >
+              </p>
+              <p class="text-gray-400 text-xs md:text-sm">Jakarta, Indonesia</p>
+            </div>
+          </div>
+
+          <!-- Bagian Bawah: Teks Brand Glassmorphism Presisi Figma -->
+          <div
+            class="mt-16 md:mt-20 text-center select-none overflow-hidden relative z-10"
+          >
+            <h2
+              class="footer-brand-title font-bold text-white/20 text-[72px] sm:text-[130px] md:text-[200px] lg:text-[240px]"
+            >
+              Kultara.id
+            </h2>
+          </div>
+        </div>
+      </footer>
+
+      <!-- CSS Khusus Replikasi Style & Glass Plugin Figma -->
+      <style>
+        .footer-visible {
+          opacity: 1 !important;
+          transform: translateY(0) !important;
+        }
+
+        .footer-brand-title {
+          /* Font Kaisei Decol Bold sesuai Figma */
+          font-family: "Kaisei Decol", serif;
+          font-weight: 700;
+          letter-spacing: -0.02em;
+
+          /* Replikasi Efek Glass Plugin Figma (Stroke 35% + Drop Shadow) */
+          -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.35);
+          text-shadow:
+            0 8px 32px rgba(0, 0, 0, 0.25),
+            inset 0 0 12px rgba(255, 255, 255, 0.2);
+          backdrop-filter: blur(8px);
+        }
+      </style>
+
+      <!-- JS Animasi Scroll Reveal -->
+      <script>
+        document.addEventListener("DOMContentLoaded", () => {
+          const footerElement = document.getElementById("site-footer");
+
+          const footerObserver = new IntersectionObserver(
+            (entries, observer) => {
+              entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                  entry.target.classList.add("footer-visible");
+                  observer.unobserve(entry.target);
+                }
+              });
+            },
+            {
+              threshold: 0.1,
+            },
+          );
+
+          if (footerElement) {
+            footerObserver.observe(footerElement);
+          }
+        });
+      </script>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/aksharamukha/dist/index.global.js"></script>
+    <script src="js/index.js"></script>
+    <script src="js/map.js"></script>
+    <script src="js/aksara.js"></script>
+  </body>
+</html>
