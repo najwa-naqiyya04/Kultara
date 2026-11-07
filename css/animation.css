@@ -1,0 +1,131 @@
+@keyframes aksaraGlow {
+  from {
+    text-shadow:
+      0 0 5px rgb(255 145 77 / 40%),
+      0 0 12px rgb(255 145 77 / 30%),
+      0 0 25px rgb(255 111 43 / 15%);
+  }
+  to {
+    text-shadow:
+      0 0 8px rgb(255 145 77 / 80%),
+      0 0 20px rgb(255 145 77 / 65%),
+      0 0 35px rgb(255 111 43 / 45%),
+      0 0 55px rgb(255 111 43 / 20%);
+  }
+}
+
+/* State kosong pada output */
+#script-output.empty {
+  color: #aaa;
+  font-size: 14px;
+}
+
+/* Card Karakter (Dinamis di-generate JS) */
+#character-grid .character-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 4px;
+  min-width: 0;
+  min-height: 112px;
+  padding: 12px;
+  border: 1.5px solid #ff914d;
+  border-radius: 12px;
+  background: #ffe2cd;
+  color: #18252d;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+#character-grid .character-card:hover {
+  transform: translateY(-2px);
+  background: #ff914d;
+  color: #fff;
+  box-shadow: 0 5px 12px rgb(255 145 77 / 18%);
+}
+
+#character-grid .character-symbol {
+  display: block;
+  color: #151515;
+  font-family:
+    "Noto Sans Javanese", "Noto Sans Balinese", "Noto Sans Sundanese",
+    sans-serif;
+  font-size: 36px;
+  line-height: 1.35;
+}
+
+#character-grid .character-card:hover .character-symbol {
+  color: #fff;
+}
+
+#character-grid .character-name {
+  display: block;
+  color: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+#character-grid .character-description {
+  display: block;
+  color: inherit;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+@media (max-width: 520px) {
+  #character-grid .character-card {
+    min-height: 100px;
+    padding: 10px;
+  }
+  #character-grid .character-symbol {
+    font-size: 31px;
+  }
+  #character-grid .character-name {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 380px) {
+  #character-grid .character-card {
+    min-height: 92px;
+    padding: 8px;
+  }
+  #character-grid .character-symbol {
+    font-size: 28px;
+  }
+  #character-grid .character-name {
+    font-size: 13px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+.stack-card {
+  transform-origin: 50% 100%;
+  will-change: transform;
+}
+
+.stack-card__title {
+  text-shadow: 0 0.06em 0.35em var(--glow);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stack-card {
+    transform: none !important;
+    will-change: auto;
+  }
+}

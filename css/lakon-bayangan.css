@@ -1,0 +1,17 @@
+     <st>
+        .stack-card {
+          transform-origin: 50% 100%;
+          will-change: transform;
+        }
+
+        .stack-card__title {
+          text-shadow: 0 0.06em 0.35em var(--glow);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .stack-card {
+            transform: none !important;
+            will-change: auto;
+          }
+        }
+      </st

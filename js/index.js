@@ -325,3 +325,54 @@
     initializeStackCards();
   }
 })();
+//footer
+document.addEventListener("DOMContentLoaded", () => {
+  const footer = document.getElementById("site-footer");
+  const glowMain = document.getElementById("cursor-glow-main");
+  const glowSec = document.getElementById("cursor-glow-sec");
+
+  if (!footer || !glowMain || !glowSec) return;
+
+  // Posisi target kursor & posisi aktual cahaya
+  let mouse = { x: footer.offsetWidth / 2, y: footer.offsetHeight / 2 };
+  let posMain = { x: mouse.x, y: mouse.y };
+  let posSec = { x: mouse.x, y: mouse.y };
+
+  // Kecepatan kehalusan (Lerp factor) - semakin kecil semakin smooth / mengayun
+  const speedMain = 0.08;
+  const speedSec = 0.05;
+
+  // Update koordinat saat kursor bergerak di dalam area footer
+  footer.addEventListener("mousemove", (e) => {
+    const rect = footer.getBoundingClientRect();
+    mouse.x = e.clientX - rect.left;
+    mouse.y = e.clientY - rect.top;
+  });
+
+  // Efek kembali ke tengah secara halus saat kursor keluar dari area footer
+  footer.addEventListener("mouseleave", () => {
+    mouse.x = footer.offsetWidth / 2;
+    mouse.y = footer.offsetHeight / 2;
+  });
+
+  // Loop Animasi menggunakan RequestAnimationFrame agar 60/120 FPS tanpa patah-patah
+  function renderGlow() {
+    // Rumus Lerp: posisi sekarang ditambah selisih dikali kecepatan
+    posMain.x += (mouse.x - posMain.x) * speedMain;
+    posMain.y += (mouse.y - posMain.y) * speedMain;
+
+    posSec.x += (mouse.x - posSec.x) * speedSec;
+    posSec.y += (mouse.y - posSec.y) * speedSec;
+
+    // Terapkan posisi ke elemen cahaya menggunakan translate
+    glowMain.style.left = `${posMain.x}px`;
+    glowMain.style.top = `${posMain.y}px`;
+
+    glowSec.style.left = `${posSec.x}px`;
+    glowSec.style.top = `${posSec.y}px`;
+
+    requestAnimationFrame(renderGlow);
+  }
+
+  requestAnimationFrame(renderGlow);
+});

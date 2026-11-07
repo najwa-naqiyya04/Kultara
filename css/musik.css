@@ -1,0 +1,120 @@
+/* =========================================
+   GLOBAL STYLE
+========================================= */
+
+body {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  background-color: #080c14;
+  color: #ffffff;
+  margin: 0;
+  padding: 0;
+
+  /* Izinkan halaman scroll normal */
+  height: auto;
+  min-height: 100vh;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.font-condensed {
+  font-family: "Barlow Condensed", sans-serif;
+}
+
+/* =========================================
+   CONCENTRIC HERO
+========================================= */
+
+#concentric-hero {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  height: 100vh;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* =========================================
+   LAYER 1: OUTER RING
+========================================= */
+
+.ring-outer-2layer {
+  box-shadow:
+    0 40px 90px -15px rgba(0, 0, 0, 0.92),
+    0 0 0 2px rgba(255, 255, 255, 0.45),
+    0 0 40px rgba(0, 0, 0, 0.6),
+    inset 0 0 60px rgba(0, 0, 0, 0.5);
+
+  transition: transform 3.4s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+/* =========================================
+   LAYER 2: INNER RING
+========================================= */
+
+.ring-inner-2layer {
+  box-shadow:
+    0 25px 65px -10px rgba(0, 0, 0, 0.96),
+    0 0 0 2.5px rgba(255, 255, 255, 0.8),
+    0 0 25px rgba(0, 0, 0, 0.7),
+    inset 0 0 40px rgba(0, 0, 0, 0.6);
+
+  transition: transform 3.2s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+/* =========================================
+   IMAGE ANIMATION
+========================================= */
+
+.ring-img {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  transition: transform 3.4s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+/* =========================================
+   GLASS UI
+========================================= */
+
+.glass-ui {
+  background: rgba(15, 23, 42, 0.7);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+/* Animasi lingkaran besar saat musik diputar */
+#ring-outer.music-rotating {
+  animation: slowRingRotation 40s linear infinite;
+}
+
+@keyframes slowRingRotation {
+  from {
+    rotate: 0deg;
+  }
+
+  to {
+    rotate: 360deg;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #ring-outer.music-rotating {
+    animation: none;
+  }
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media screen and (max-width: 768px) {
+  #concentric-hero {
+    min-height: 100vh;
+    height: 100vh;
+  }
+}

@@ -1,0 +1,79 @@
+/* ==========================================================================
+   DESKTOP (>= 1024px): Berjejer menyamping & membuka ke samping
+   ========================================================================== */
+.batik-grid-accordion {
+  display: flex;
+  flex-direction: row !important;
+  will-change: auto;
+}
+
+.batik-grid-accordion .batik-g-card {
+  flex: 1 1 0%;
+  min-width: 0;
+  transition: flex 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: flex, transform, opacity;
+}
+
+.batik-grid-accordion .batik-g-card:hover {
+  flex: 4 1 0%;
+}
+
+/* Mengunci semua kartu agar tetap tertutup rapat selama animasi scroll turun berlangsung */
+.batik-grid-accordion.is-entering .batik-g-card {
+  pointer-events: none !important;
+  flex: 1 1 0% !important;
+}
+
+/* ==========================================================================
+   RESPONSIF MOBILE & TABLET (< 1024px): Menumpuk horizontal ke bawah
+   ========================================================================== */
+@media (max-width: 1023px) {
+  .batik-grid-accordion {
+    flex-direction: column !important; /* Wajib kolom agar menumpuk ke bawah */
+    height: auto !important;
+    gap: 12px !important;
+  }
+
+  .batik-grid-accordion .batik-g-card {
+    width: 100% !important;
+    height: 90px !important;
+    flex: none !important;
+    transition: height 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* Saat di-tap/hover di HP, kartu memanjang ke bawah membuka gambarnya */
+  .batik-grid-accordion .batik-g-card:hover,
+  .batik-grid-accordion .batik-g-card:active,
+  .batik-grid-accordion .batik-g-card:focus-within {
+    height: 340px !important;
+  }
+
+  .batik-grid-accordion.is-entering .batik-g-card {
+    height: 90px !important;
+    flex: none !important;
+  }
+
+  /* Teks judul mendatar lurus di tengah seperti desain referensi */
+  .batik-grid-accordion .card-title-vertical span {
+    writing-mode: horizontal-tb !important;
+    transform: none !important;
+    rotate: 0deg !important;
+    --tw-rotate: 0deg !important;
+    font-size: 16px !important;
+    letter-spacing: 0.02em !important;
+  }
+
+  .batik-grid-accordion .card-content {
+    padding: 16px !important;
+  }
+
+  .batik-grid-accordion .card-content h3 {
+    font-size: 18px !important;
+    margin-bottom: 4px !important;
+  }
+
+  .batik-grid-accordion .card-content p {
+    font-size: 12px !important;
+    line-height: 1.5 !important;
+  }
+}

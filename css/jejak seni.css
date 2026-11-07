@@ -1,0 +1,93 @@
+.jejak-carousel-stage {
+  perspective: 1200px;
+}
+
+.jejak-carousel-track {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.jejak-card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 200px;
+  height: 290px;
+  margin-top: -145px;
+  margin-left: -100px;
+  will-change: transform, opacity;
+  cursor: pointer;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+@media (min-width: 640px) {
+  .jejak-card {
+    width: 235px;
+    height: 340px;
+    margin-top: -170px;
+    margin-left: -117.5px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .jejak-card {
+    width: 265px;
+    height: 385px;
+    margin-top: -192.5px;
+    margin-left: -132.5px;
+  }
+}
+
+.jejak-card__figure {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #171a18;
+  box-shadow: 0 18px 36px -12px rgba(23, 26, 24, 0.32);
+}
+
+/* Aksen Pita Kaset Film saat Fase S-Curve */
+.jejak-card__figure::before,
+.jejak-card__figure::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 12px;
+  z-index: 3;
+  pointer-events: none;
+  opacity: var(--film-opacity, 0);
+  background-image: repeating-linear-gradient(
+    to bottom,
+    rgba(251, 254, 237, 0.8) 0px,
+    rgba(251, 254, 237, 0.8) 8px,
+    transparent 8px,
+    transparent 18px
+  );
+}
+
+.jejak-card__figure::before {
+  left: 5px;
+}
+
+.jejak-card__figure::after {
+  right: 5px;
+}
+
+.jejak-card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  pointer-events: none;
+  user-select: none;
+}
